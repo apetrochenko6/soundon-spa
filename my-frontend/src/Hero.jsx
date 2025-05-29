@@ -9,7 +9,7 @@ const Hero = () => {
   const images = [
     images_p.Hero,
     images_p.heroImage2,
-    images_p.Zespol2,
+    images_p.Zespol1,
   ];
 
   const handleNext = () => {
