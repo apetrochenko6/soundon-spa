@@ -1,0 +1,556 @@
+        @import 'react-slideshow-image/dist/styles.css';
+
+        * {
+          
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: 'Work Sans', sans-serif;
+        }
+
+        body {
+          background-color: #FFFFFF;
+          position: relative;
+        }
+
+
+        .navbar {
+
+          background-color: #000;
+          color: #fff;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 15px 20px;
+        }
+
+        .navbar-left {
+          margin-left: 25px;
+        }
+
+        .navbar-left a {
+          font-family: 'Montserrat', sans-serif;
+          color: #ffd700;
+          text-decoration: none;
+          margin-right: 50px;
+          margin-left: 20px;
+          font-size: 25px;
+          font-weight: lighter;
+        }
+
+        .navbar-left a:hover,
+        .navbar-left a:focus {
+          text-decoration: none;
+          outline: none;
+        }
+
+        .navbar-right a {
+          margin-left: 15px;
+        }
+
+        .navbar-right img {
+          width: 24px;
+          vertical-align: middle;
+        }
+
+        /* Секція каруселі */
+        .carousel-wrapper {
+          position: relative;
+          max-width: 80%;
+          margin: 20px auto 10px auto;
+          border: 4px solid #000;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .carousel {
+
+          position: relative;
+          overflow: hidden;
+          width: 100%;
+          aspect-ratio: 16 / 6;
+        }
+
+        .carousel-images {
+          display: flex;
+          width: 100%;
+          transition: transform 0.5s ease-in-out;
+          height: 100%;
+        }
+
+        .carousel-images img {
+          width: 100%;
+          min-width: 100%;
+          height: 100%;
+          object-fit: cover;
+          flex-shrink: 0;
+          filter: grayscale(100%);
+        }
+
+
+        .carousel-controls {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: 100%;
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          padding: 0 10px;
+        }
+
+        .carousel-controls button {
+          background: none;
+          border: none;
+          font-size: 50px;
+          cursor: pointer;
+          color: #000;
+          padding: 15px 20px;
+          font-weight: bold;
+          border-radius: 15px;
+          transition: background-color 0.3s ease;
+        }
+
+        .carousel-controls button:hover {
+          background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .carousel-controls button:first-child {
+          margin-left: -120px;
+        }
+
+        .carousel-controls button:last-child {
+          margin-right: -120px;
+        }
+
+        .band-carousel {
+          display: flex;
+          gap: 40px;
+          overflow-x: auto;
+          scroll-snap-type: x mandatory;
+          padding-bottom: 10px;
+        }
+
+        .band-carousel::-webkit-scrollbar {
+          display: none;
+          /* Приховуємо скролбар */
+        }
+
+        .zespol-lable {
+          font-Size: 80px;
+          font-Weight: 900;
+          background-Color: #FFD700;
+          font-Family: Work Sans;
+          color: #000;
+          display: inline-block;
+          padding: 8px 5px;
+          margin-Bottom: 30px;
+          line-Height: 1;
+        }
+
+        .band-item {
+          flex: 0 0 auto;
+          scroll-snap-align: start;
+        }
+
+        /* Контейнер для індикаторів */
+        .indicators-container {
+          max-width: 1550px;
+          margin: 0 auto 5px auto;
+          display: flex;
+          justify-content: center;
+        }
+
+        /* Індикатори каруселі */
+        .carousel-indicators {
+          display: flex;
+          justify-content: center;
+          gap: 12px;
+          padding: 10px 0;
+        }
+
+        .carousel-indicators div {
+          width: 40px;
+          height: 20px;
+          background-color: #D9D9D9;
+          border: none;
+          cursor: pointer;
+        }
+
+        .carousel-indicators .active {
+          background-color: #000000;
+          height: calc(100% + 30%);
+        }
+
+
+
+
+
+
+
+        .divider {
+          width: 100%;
+          height: 30px;
+          background-color: #000;
+          margin-top: 10px;
+        }
+
+
+        .buttons {
+          display: flex;
+          justify-content: center;
+          gap: 20px;
+          padding: 20px;
+          align-items: center;
+          background-color: #F7F7F7;
+        }
+
+        .buttons a.button {
+          background-color: #FFCC00;
+          color: #000;
+          text-decoration: none;
+          padding: 5px 30px 10px 10px;
+          border: none;
+          font-weight: bold;
+          font-size: 50px;
+          text-transform: uppercase;
+          box-shadow: -12px 12px 0 #000;
+          transition: box-shadow 0.2s ease;
+          width: 300px;
+          text-align: left;
+          display: inline-block;
+          line-height: 0.9;
+        }
+
+        .buttons a.button:hover {
+          box-shadow: -5px 5px 0 #000;
+        }
+
+        .buttons a.or {
+          background: none;
+          color: #000;
+          text-decoration: none;
+          text-transform: lowercase;
+          font-weight: 900;
+          font-size: 18px;
+          padding: 15px 0;
+          border: none;
+          box-shadow: none;
+          -webkit-text-stroke: 0.5px #000;
+          position: relative;
+          top: 5px;
+        }
+
+
+        .yellow-divider {
+          width: 100%;
+          height: 30px;
+          background-color: #FFCC00;
+     
+        }
+
+
+        .bands-section {
+          background-color: #000;
+          padding: 40px 0;
+          color: #fff;
+          position: relative;
+          text-align: left;
+          margin-top: 30px;
+        }
+
+        .bands-section h1 {
+          font-size: 60px;
+          font-weight: 900;
+          background-color: #FFCC00;
+          padding: 10px 30px;
+          display: inline-block;
+          margin-bottom: 20px;
+          color: #000;
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+
+        .band-card {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          position: relative;
+          flex-direction: column;
+          width: 550px;
+          height: 430px;
+          overflow: hidden;
+          cursor: pointer;
+          margin: 0 auto;
+        }
+
+        .band-image {
+          width: 550px;
+          height: 320px;
+          object-fit: cover;
+          border: 3px solid #fff;
+        }
+
+        .band-info {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          background-color: rgba(0, 0, 0, 0.85);
+          color: white;
+          padding: 20px;
+          transform: translateY(100%);
+          transition: transform 0.3s ease-in-out;
+          text-align: center;
+        }
+
+        .band-card-h2 {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          background-color: rgba(0, 0, 0, 0.85);
+          color: white;
+          padding: 20px;
+          transform: translateY(100%);
+          transition: transform 0.3s ease-in-out;
+          text-align: center;
+        }
+
+        .band-card:hover .band-info {
+          transform: translateY(0%);
+        }
+        .ticket-page {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px;
+  flex-wrap: wrap;
+}
+
+.left-column {
+  flex: 1;
+  min-width: 320px;
+  max-width: 600px;
+}
+
+.right-column {
+  flex: 1;
+  min-width: 300px;
+  max-width: 500px;
+  background-color: #f9f9f9;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+
+        .band-info a {
+          display: inline-block;
+          margin-top: 10px;
+          background-color: #FFCC00;
+          color: #000;
+          padding: 8px 16px;
+          text-decoration: none;
+          border-radius: 10px;
+        }
+
+        @media (max-width: 1200px) {
+
+          .carousel-wrapper {
+            margin: 15px auto 8px auto;
+          }
+
+          .carousel-controls button:first-child {
+            margin-left: -100px;
+          }
+
+          .carousel-controls button:last-child {
+            margin-right: -100px;
+          }
+
+          .carousel-controls button {
+            font-size: 40px;
+            padding: 10px 15px;
+          }
+
+          .festival-info {
+            bottom: -40px;
+            /* Змінено з 40px на -40px */
+            right: 0;
+            width: 350px;
+            height: 140px;
+            padding: 8px 15px;
+          }
+
+          .festival-info h1 {
+            font-size: 32px;
+          }
+
+          .festival-info p {
+            font-size: 12px;
+            margin-bottom: 6px;
+          }
+
+          .festival-info .date {
+            font-size: 11px;
+          }
+
+          .cross {
+            top: -20px;
+            left: -20px;
+            width: 40px;
+            height: 40px;
+            font-size: 32px;
+            -webkit-text-stroke: 0.4px #000;
+          }
+
+          .navbar-left a {
+            font-size: 14px;
+            margin-right: 40px;
+          }
+
+          .navbar {
+            padding: 15px 20px;
+          }
+
+          .band-card {
+            max-width: 400px;
+          }
+
+          .bands-section {
+            padding: 30px 0;
+            margin-top: 25px;
+          }
+
+          .bands-section h1 {
+            font-size: 52px;
+            padding: 8px 25px;
+          }
+
+          .band-card h3 {
+            font-size: 20px;
+            margin-top: 8px;
+          }
+
+          .band-card p {
+            font-size: 14px;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .divider {
+            height: 35px;
+          }
+
+          .zespol-lable {
+            font-size: 65px;
+            max-width: 350px;
+          }
+
+
+          @media (max-width: 768px) {
+            .carousel {
+              aspect-ratio: auto;
+              height: 400px;
+            }
+
+            .carousel-images img {
+              height: 400px;
+            }
+
+            .band-image {
+              max-width: 350px;
+            }
+
+            .band-card {
+              max-width: 350px;
+            }
+
+
+            .carousel {
+              aspect-ratio: 16 / 7;
+            }
+
+            .carousel-controls button:first-child {
+              margin-left: -80px;
+            }
+
+            .carousel-controls button:last-child {
+              margin-right: -80px;
+            }
+
+            .carousel-controls button {
+              display: none;
+            }
+
+
+            .buttons a.button {
+              padding: 8px 20px 8px 8px;
+              font-size: 18px;
+              width: 200px;
+              box-shadow: -5px 5px 0 #000;
+            }
+
+            .buttons a.button:hover {
+              box-shadow: -3px 3px 0 #000;
+            }
+
+            .buttons a.or {
+              font-size: 16px;
+            }
+
+            .navbar-left a {
+              font-size: 12px;
+              margin-right: 30px;
+            }
+
+            .navbar {
+              padding: 10px 20px;
+            }
+
+            .divider {
+              margin-top: 5px;
+              height: 15px;
+            }
+
+            .yellow-divider {
+              height: 15px;
+            
+            }
+
+            .bands-section {
+              padding: 20px 0;
+              margin-top: 20px;
+            }
+
+            .bands-section h1 {
+              font-family: 'Work Sans', sans-serif;
+              font-weight: 700;
+              font-size: 100px;
+            }
+
+
+
+
+            .band-card h3 {
+              font-family: 'Work Sans', sans-serif;
+              font-weight: 700;
+              font-size: 20px;
+            }
+
+
+            .band-card p {
+              font-family: 'Work Sans', sans-serif;
+              font-weight: 400;
+              font-size: 15px;
+            }
+
+          }
+        }
