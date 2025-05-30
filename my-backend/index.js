@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 
 const app = express();
-process.env.PORT || 4000
+const PORT = process.env.PORT || 4000;
 
 const saveToFile = (data) => {
     const filePath = path.join(__dirname, 'tickets.json');
