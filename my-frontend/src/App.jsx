@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navbar from './navbar'
+import Navbar from './Navbar'
 import Hero from './Hero'
 import Bands from './bands'
 import BuyTicket from './BuyTickets'
