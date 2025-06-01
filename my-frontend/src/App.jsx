@@ -14,7 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={
           <>
-            
+            <Navbar />
             <section id="section"><Hero id="section"/></section>
             <section id="zespoly"><Bands /></section>
             
