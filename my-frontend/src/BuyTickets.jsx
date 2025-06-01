@@ -86,7 +86,7 @@ const PaymentForm = () => {
         validationSchema: paySchema,
         onSubmit: async (values, { resetForm, setSubmitting }) => {
             try {
-                const response = await fetch("http://localhost:4000/api/buy_ticket", {
+                const response =await fetch(`${process.env.VITE_API_URL || 'http://localhost:4000'}/api/buy_ticket`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
