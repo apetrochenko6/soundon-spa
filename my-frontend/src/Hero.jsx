@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from "react";
 import images_p from "./constants/data";
-
+import BandForm from './ApplyBand';
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [touchStartX, setTouchStartX] = useState(null);
   const [touchEndX, setTouchEndX] = useState(null);
+  const [showBandForm, setShowBandForm] = useState(false);
+
+  const handleOverlayClick = (e) => {
+    // Close only if clicking directly on overlay (not form content)
+    if (e.target === e.currentTarget) {
+      setShowBandForm(false);
+    }
+  };
 
   const images = [
     images_p.Hero,
@@ -80,13 +88,22 @@ const Hero = () => {
           ))}
         </div>
       </div>
-
-      
+      {showBandForm && (
+        <div className="modal-overlay" onClick={handleOverlayClick}>
+          <div onClick={(e) => e.stopPropagation()}> {/* This prevents click propagation */}
+            <BandForm
+              isVisible={showBandForm}
+              onClose={() => setShowBandForm(false)}
+            />
+          </div>
+        </div>
+      )}
       <div className="divider"></div>
       <div className="buttons">
         <a href="/buy_ticket" className="button">KUP<br />BILET</a>
         <p style={{ fontSize: 45, fontWeight: 900 }}>lub</p>
-        <a href="#" className="button">ZGŁOŚ<br />ZESPÓŁ</a>
+        <a href="#" className="button" onClick={() => setShowBandForm(true)}
+        >ZGŁOŚ<br />ZESPÓŁ</a>
       </div>
       <div className="yellow-divider"></div>
     </>

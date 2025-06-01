@@ -1,16 +1,42 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
+const fs = require("fs");
+const sqlite3 = require("sqlite3").verbose(); 
 
 const app = express();
 const PORT = 4000;
+n
+const db = new sqlite3.Database('./database.sqlite', (err) => {
+    if (err) {
+        console.error('Database connection error:', err.message);
+    } else {
+        console.log('Connected to the SQLite database.');
+        db.run(`CREATE TABLE IF NOT EXISTS tickets (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            surname TEXT NOT NULL,
+            email TEXT NOT NULL,
+            phone TEXT,
+            ticketType TEXT NOT NULL,
+            quantity INTEGER NOT NULL,
+            payment TEXT NOT NULL,
+            cardNumber TEXT,
+            expiryDate TEXT,
+            cvv TEXT,
+            createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
+        )`);
+    }
+});
 
+// Helper function to save to JSON file (optional backup)
 const saveToFile = (data) => {
     const filePath = path.join(__dirname, 'tickets.json');
     let tickets = [];
     
     try {
         if (fs.existsSync(filePath)) {
-            tickets = JSON.parse(fs.readFileSync(filePath));
+            tickets = JSON.parse(fs.readFileSync(filePath, 'utf8'));
         }
         
         tickets.push({
@@ -23,11 +49,10 @@ const saveToFile = (data) => {
         console.error('Error saving ticket:', err);
     }
 };
-app.use(cors()); 
+
+app.use(cors());
 app.use(express.json());
-cors({
-   origin : "https://soundon-spa-1.onrender.com/"
-})
+
 app.get("/", (req, res) => {
     res.send("Backend działa. Użyj POST na /api/buy_ticket");
 });
@@ -36,31 +61,42 @@ app.get("/api/buy_ticket", (req, res) => {
     res.status(405).json({ message: "Metoda GET nie jest obsługiwana. Użyj POST." });
 });
 
-const db = require('./database');
-
-app.post("/api/buy_ticket", (req, res) => {
+app.post("/api/buy_ticket", async (req, res) => {
     const { name, surname, email, phone, ticketType, quantity, payment, cardNumber, expiryDate, cvv } = req.body;
-    
-    db.run(
-        `INSERT INTO tickets (name, surname, email, phone, ticketType, quantity, payment, cardNumber, expiryDate, cvv) 
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [name, surname, email, phone, ticketType, quantity, payment, cardNumber, expiryDate, cvv],
-        function(err) {
-            if (err) {
-                return res.status(500).json({ error: err.message });
-            }
-            res.json({ 
-                message: "Zgłoszenie przyjęte!",
-                ticketId: this.lastID 
-            });
-        }
-    );
+    if (!name || !surname || !email || !ticketType || !quantity || !payment) {
+        return res.status(400).json({ error: "Brak wymaganych pól" });
+    }
+    try {
+        const result = await new Promise((resolve, reject) => {
+            db.run(
+                `INSERT INTO tickets (name, surname, email, phone, ticketType, quantity, payment, cardNumber, expiryDate, cvv) 
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                [name, surname, email, phone, ticketType, quantity, payment, cardNumber, expiryDate, cvv],
+                function(err) {
+                    if (err) return reject(err);
+                    resolve(this.lastID);
+                }
+            );
+        });
+        saveToFile(req.body);
+
+        res.json({ 
+            message: "Zgłoszenie przyjęte!",
+            ticketId: result
+        });
+    } catch (err) {
+        console.error('Database error:', err);
+        res.status(500).json({ error: "Błąd podczas zapisywania zgłoszenia" });
+    }
 });
 
+// Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({ error: "Coś poszło nie tak!" });
 });
+
+// Start server
 app.listen(PORT, () => {
     console.log(`Serwer działa na http://localhost:${PORT}`);
 });

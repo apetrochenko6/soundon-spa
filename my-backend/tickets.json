@@ -1,0 +1,15 @@
+[
+  {
+    "name": "ANHELINA",
+    "surname": "PETROCHENKO",
+    "email": "angpe452@gmail.com",
+    "phone": "516855440",
+    "ticketType": "3day",
+    "quantity": 1,
+    "payment": "credit",
+    "cardNumber": "1232131231321231",
+    "expiryDate": "12/33",
+    "cvv": "123",
+    "createdAt": "2025-06-01T09:03:57.966Z"
+  }
+]
