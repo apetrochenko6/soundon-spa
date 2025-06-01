@@ -1,9 +1,11 @@
         @import 'react-slideshow-image/dist/styles.css';
-html {
-  scroll-behavior: smooth;
-}
+
+        html {
+          scroll-behavior: smooth;
+        }
+
         * {
-          
+
           margin: 0;
           padding: 0;
           box-sizing: border-box;
@@ -55,7 +57,7 @@ html {
           vertical-align: middle;
         }
 
-        /* Секція каруселі */
+
         .carousel-wrapper {
           position: relative;
           max-width: 80%;
@@ -250,7 +252,7 @@ html {
           width: 100%;
           height: 30px;
           background-color: #FFCC00;
-     
+
         }
 
 
@@ -326,31 +328,32 @@ html {
         .band-card:hover .band-info {
           transform: translateY(0%);
         }
+
         .ticket-page {
-  display: flex;
-  flex-direction: row;
-  gap: 30px;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 40px;
-  flex-wrap: wrap;
-}
+          display: flex;
+          flex-direction: row;
+          gap: 30px;
+          justify-content: center;
+          align-items: flex-start;
+          padding: 40px;
+          flex-wrap: wrap;
+        }
 
-.left-column {
-  flex: 1;
-  min-width: 320px;
-  max-width: 600px;
-}
+        .left-column {
+          flex: 1;
+          min-width: 320px;
+          max-width: 600px;
+        }
 
-.right-column {
-  flex: 1;
-  min-width: 300px;
-  max-width: 500px;
-  background-color: #f9f9f9;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
+        .right-column {
+          flex: 1;
+          min-width: 300px;
+          max-width: 500px;
+          background-color: #f9f9f9;
+          padding: 30px;
+          border-radius: 10px;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
 
 
         .band-info a {
@@ -412,9 +415,15 @@ html {
             font-size: 32px;
             -webkit-text-stroke: 0.4px #000;
           }
-          .navbar{
-            width: 100%;
+          .navbar-right
+          {
+            display: none;
           }
+          .navbar {
+            width: 100%;
+            height: 60px;
+          }
+
           .navbar-left a {
             font-size: 14px;
             margin-right: 40px;
@@ -526,7 +535,7 @@ html {
 
             .yellow-divider {
               height: 15px;
-            
+
             }
 
             .bands-section {
