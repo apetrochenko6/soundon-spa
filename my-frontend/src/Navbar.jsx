@@ -6,10 +6,10 @@ const Navbar = () => {
             <header className="header">
                 <div className="navbar">
                     <div className="navbar-left">
-                        <a href="#">O NAS</a>
+                        <a href="#section">O NAS</a>
                         <a href="#">PARTNERZY</a>
-                        <a href="#">ARTYŚCI</a>
-                        <a href="#">FAQ</a>
+                        <a href="#zespoly">ARTYŚCI</a>
+                        <a href="#FAQ">FAQ</a>
                     </div>
                     <div className="navbar-right">
                         <a href="#"><img src={images.YoutubeYellow} style={{ width: '55px', height: '55px' }}alt="YouTube" /></a>

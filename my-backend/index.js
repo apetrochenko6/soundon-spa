@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 
 const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = 4000;
 
 const saveToFile = (data) => {
     const filePath = path.join(__dirname, 'tickets.json');
@@ -23,10 +23,7 @@ const saveToFile = (data) => {
         console.error('Error saving ticket:', err);
     }
 };
-app.use(cors({
-  origin: 'https://soundon-spa.onrender.com',
-  methods: ['GET', 'POST']
-}));
+app.use(cors()); 
 app.use(express.json());
 
 app.get("/", (req, res) => {

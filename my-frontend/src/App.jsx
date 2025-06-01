@@ -15,9 +15,11 @@ function App() {
         <Route path="/" element={
           <>
             <Navbar />
-            <Hero />
-            <Bands />
-             <FAQ/>
+            <section id="section"><Hero id="section"/></section>
+            <section id="zespoly"><Bands /></section>
+            
+             <section id="FAQ"><FAQ/></section>
+             
             <Footer/>
            
           </>

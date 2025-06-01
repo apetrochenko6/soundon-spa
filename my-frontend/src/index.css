@@ -1,5 +1,7 @@
         @import 'react-slideshow-image/dist/styles.css';
-
+html {
+  scroll-behavior: smooth;
+}
         * {
           
           margin: 0;

@@ -1,6 +1,8 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import './buyTicket.css';
+
+
 const ticketDescriptions = {
     "1day": [
         "Wstęp na 1 dzień festiwalu",
