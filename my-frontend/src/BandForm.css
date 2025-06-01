@@ -172,12 +172,14 @@
  }
 
  @media (max-width: 600px) {
+
      .band-form {
          gap: 5px;
      }
 
      .two-cols {
          flex-direction: column;
+         gap: 10px;
      }
 
      .submit-line {
