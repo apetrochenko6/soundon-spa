@@ -7,7 +7,7 @@ const sqlite3 = require("sqlite3").verbose();
 const app = express();
 const PORT = process.env.PORT || 4000;
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000', // Your frontend URL
+  origin: process.env.CLIENT_URL || 'http://localhost:3000', // Your frontend URL
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true // If using cookies
