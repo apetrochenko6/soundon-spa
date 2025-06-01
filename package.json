@@ -2,11 +2,12 @@
   "name": "my-app",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {
-    "start": "node my-backend/index.js",
-    "client": "cd my-frontend && npm start",
-    "build": "cd my-frontend && npm run build",
-    "heroku-postbuild": "npm run build"
+   "scripts": {
+    "install-server": "cd my-backend && npm install",
+    "start-server": "cd my-backend && node index.js",
+    "install-client": "cd my-frontend && npm install",
+    "build-client": "cd my-frontend && npm run build",
+    "start-client": "cd my-frontend && npm run start"
   },
   "dependencies": {
     "vite": "^5.0.0",
