@@ -90,7 +90,7 @@ app.post("/api/buy_ticket", async (req, res) => {
                 }
             );
         });
-
+        console.log('Received JSON:', req.body);
         saveToFile(req.body);
         console.log("saved");
         res.json({ 
