@@ -25,7 +25,9 @@ const saveToFile = (data) => {
 };
 app.use(cors()); 
 app.use(express.json());
-
+cors({
+   origin : "https://soundon-spa-1.onrender.com/"
+})
 app.get("/", (req, res) => {
     res.send("Backend działa. Użyj POST na /api/buy_ticket");
 });
