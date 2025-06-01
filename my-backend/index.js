@@ -8,12 +8,12 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 // Enhanced CORS configuration
-const cors = require('cors');
-
-app.use(cors({
-  origin: 'https://soundon-spa-nucd.vercel.app',
-  credentials: true,
-}));
+const corsOptions = {
+  origin: process.env.CLIENT_URL || "https://soundon-spa-nucd.vercel.app",
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+};
 
 app.use(cors(corsOptions));
 app.use(express.json());
