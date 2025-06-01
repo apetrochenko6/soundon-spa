@@ -156,31 +156,44 @@
     }
 
 /* Submit line - mobile adaptations */
-.submit-line {
-    background-color: black;
-    color: white;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 20px; /* Reduced size */
-    text-align: center;
-    margin: 20px -20px; /* Adjusted margins */
-    padding: 8px 0; /* Adjusted padding */
-    width: calc(100% + 40px); /* Adjusted width */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); /* Reduced shadow */
-    letter-spacing: 0.3px; /* Reduced spacing */
-}
+.zglos-zespol-band{
+      background-color: black;
+      color: white;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      text-align: center;
+      margin-top: 20px;
+      margin-left: -25px;
+      margin-right: -25px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      width: calc(100% + 50px);
+
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
 
 /* Media query for very small devices */
-@media (max-width: 400px) {
+@media (max-width: 780px) {
     .band-form {
         padding: 15px;
     }
     
     .band-form button {
         font-size: 20px;
-        padding: 12px 20px;
+        padding: 10px 16px;
     }
     
-    .submit-line {
-        font-size: 18px;
+    .zglos-zespol-band {
+        font-size: 26px;
     }
+    .close-container {
+      position: absolute;
+      top: -7px;
+      right: -16px;
+      width: 48px;
+      height: 48px;
+    }
+
 }

@@ -115,7 +115,7 @@ const BandForm = ({ isVisible, onClose }) => {
           </div>
         </div>
 
-        <div className="submit-line zglos-zespol">
+        <div className="zglos-zespol-band">
           DOŁĄCZ DO NASZEGO FESTIWALU
         </div>
 
