@@ -1,194 +1,186 @@
- /* Button styles */
- .button {
-     display: inline-block;
-     padding: 12px 30px;
-     text-decoration: none;
-     transition: all 0.3s ease;
-     border: none;
-     cursor: pointer;
- }
+/* Base button styles (unchanged) */
+.button {
+    display: inline-block;
+    padding: 12px 30px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
 
- .button:hover {
-     background-color: #e04b00;
-     transform: translateY(-2px);
-     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
- }
+.button:hover {
+    background-color: #e04b00;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
 
- .modal-overlay {
-     margin: 0 auto;
+/* Modal overlay - improved for mobile */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Changed to flex-start for mobile */
+    padding: 20px; /* Added padding */
+    overflow-y: auto; /* Enable scrolling */
+}
 
-     position: fixed;
-     top: 0;
-     left: 0;
-     right: 0;
-     bottom: 0;
-     background-color: rgba(0, 0, 0, 0.5);
-     z-index: 1000;
-     display: flex;
-     justify-content: center;
-     align-items: center;
- }
+/* Form container - mobile adaptations */
+.band-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    width: 100%; /* Full width on mobile */
+    max-width: 550px; /* Maximum width */
+    padding: 20px; /* Reduced padding */
+    border: 5px solid black;
+    border-radius: 7px;
+    background-color: #FFCC00;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    margin: 20px 0; /* Added margin */
+}
 
+/* Form elements */
+.band-form label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px; /* Reduced size */
+}
 
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
+/* Two-column layout becomes single column on mobile */
+.two-cols {
+    flex-direction: column; /* Changed from row to column */
+    gap: 10px;
+}
 
- .band-form {
-     display: flex;
-     flex-direction: column;
-     gap: 10px;
-     position: relative;
-     max-width: 550px;
-     padding: 30px;
-     border: 5px solid black;
-     border-radius: 7px;
-     background-color: #FFCC00;
-     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
- }
+.form-control {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
 
- .band-form label {
-     font-family: 'Bebas Neue', sans-serif;
- }
+/* Input fields */
+.band-form input,
+.band-form select,
+.band-form textarea {
+    padding: 10px; /* Slightly larger for touch */
+    font-size: 16px;
+    border: 2px solid black;
+    border-radius: 3px;
+    width: 100%; /* Full width */
+}
 
- .form-group {
-     display: flex;
-     flex-direction: column;
-     gap: 10px;
- }
+/* Submit button - mobile adaptations */
+.band-form button {
+    display: inline-block;
+    background-color: white;
+    color: black;
+    border: 4px solid black;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px; /* Reduced size */
+    padding: 15px 25px; /* Reduced padding */
+    text-decoration: none;
+    text-transform: uppercase;
+    position: relative;
+    box-shadow: 6px 6px 0 black; /* Reduced shadow */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    width: 100%; /* Full width */
+}
 
- .two-cols {
-     flex-direction: row;
-     gap: 15px;
- }
+.band-form button:hover {
+    transform: translate(-3px, -3px); /* Reduced movement */
+    box-shadow: 9px 9px 0 black; /* Reduced shadow */
+}
 
- .form-control {
-     flex: 1;
-     display: flex;
-     flex-direction: column;
- }
+/* Form footer */
+.form-footer {
+    text-align: center;
+    margin-top: 15px;
+}
 
- .band-form label {
-     font-size: 18px;
-     margin-bottom: 5px;
- }
+/* Close button - mobile adaptations */
 
- .band-form input,
- .band-form select,
- .band-form textarea {
-     padding: 7px;
-     font-size: 16px;
-     border: 2px solid black;
-     border-radius: 3px;
- }
+    .close-container {
+      position: absolute;
+      top: -10px;
+      right: -20px;
+      width: 50px;
+      height: 50px;
+      background-color: #FFCC00;
+      border: 4px solid black;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+      cursor: pointer;
+      z-index: 10;
+      transition: transform 0.2s;
+    }
 
+    .leftright,
+    .rightleft {
+      height: 4px;
+      width: 40px;
+      position: absolute;
+      background-color: black;
+      border-radius: 2px;
+      transition: all 0.3s ease-in;
+    }
 
- .band-form button {
-     display: inline-block;
-     background-color: white;
-     color: black;
-     border: 4px solid black;
-     font-family: 'Bebas Neue', sans-serif;
-     font-size: 30px;
-     padding: 20px 40px;
-     text-decoration: none;
-     text-transform: uppercase;
-     position: relative;
-     box-shadow: 8px 8px 0 black;
-     transition: transform 0.2s ease, box-shadow 0.2s ease;
- }
+    .leftright {
+      transform: rotate(45deg);
+    }
 
- .band-form button:hover {
-     transform: translate(-4px, -4px);
-     box-shadow: 12px 12px 0 black;
- }
+    .rightleft {
+      transform: rotate(-45deg);
+    }
 
+    .close-container:hover .leftright {
+      transform: rotate(-45deg);
+    }
 
- .form-footer {
-     text-align: center;
-     margin-top: 20px;
- }
+    .close-container:hover .rightleft {
+      transform: rotate(45deg);
+    }
 
+/* Submit line - mobile adaptations */
+.submit-line {
+    background-color: black;
+    color: white;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px; /* Reduced size */
+    text-align: center;
+    margin: 20px -20px; /* Adjusted margins */
+    padding: 8px 0; /* Adjusted padding */
+    width: calc(100% + 40px); /* Adjusted width */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); /* Reduced shadow */
+    letter-spacing: 0.3px; /* Reduced spacing */
+}
 
-
- .close-container {
-     position: absolute;
-     top: -25px;
-     right: -25px;
-     width: 50px;
-     height: 50px;
-     background-color: #FFCC00;
-     border: 4px solid black;
-     border-radius: 50%;
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-     cursor: pointer;
-     z-index: 10;
-     transition: transform 0.2s;
- }
-
- .leftright,
- .rightleft {
-     height: 4px;
-     width: 40px;
-     position: absolute;
-     background-color: black;
-     border-radius: 2px;
-     transition: all 0.3s ease-in;
- }
-
- .leftright {
-     transform: rotate(45deg);
- }
-
- .rightleft {
-     transform: rotate(-45deg);
- }
-
- .close-container:hover .leftright {
-     transform: rotate(-45deg);
- }
-
- .close-container:hover .rightleft {
-     transform: rotate(45deg);
- }
-
- .submit-line {
-     background-color: black;
-     color: white;
-     font-family: 'Bebas Neue', sans-serif;
-     font-size: 28px;
-     text-align: center;
-     margin-top: 20px;
-     margin-left: -37px;
-     margin-right: -37px;
-     padding-top: 10px;
-     padding-bottom: 10px;
-     width: calc(100% + 74px);
-
-     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-     letter-spacing: 0.5px;
-     text-transform: uppercase;
- }
-
- @media (max-width: 600px) {
+/* Media query for very small devices */
+@media (max-width: 400px) {
+    .band-form {
+        padding: 15px;
+    }
     
-
-     .two-cols {
-         flex-direction: column;
-     }
-
-     .submit-line {
-         font-size: 20px;
-
-     }
-
-     .band-form button {
-         font-size: 22px;
-         padding: 14px 28px;
-     }
-
-     .band-form label {
-         font-size: 20px;
-     }
- }
+    .band-form button {
+        font-size: 20px;
+        padding: 12px 20px;
+    }
+    
+    .submit-line {
+        font-size: 18px;
+    }
+}
