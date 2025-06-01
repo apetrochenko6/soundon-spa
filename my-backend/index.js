@@ -7,7 +7,6 @@ const sqlite3 = require("sqlite3").verbose();
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-// Enhanced CORS configuration
 const corsOptions = {
   origin: process.env.CLIENT_URL || "https://soundon-spa-nucd.vercel.app",
   methods: ['GET', 'POST', 'OPTIONS'],
@@ -18,7 +17,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-// Database connection
 const db = new sqlite3.Database('./database.sqlite', (err) => {
     if (err) {
         console.error('Database connection error:', err.message);
@@ -40,12 +38,9 @@ const db = new sqlite3.Database('./database.sqlite', (err) => {
         )`);
     }
 });
-
-// Helper function to save to JSON file
 const saveToFile = (data) => {
     const filePath = path.join(__dirname, 'tickets.json');
     let tickets = [];
-
     try {
         if (fs.existsSync(filePath)) {
             tickets = JSON.parse(fs.readFileSync(filePath, 'utf8'));
@@ -62,7 +57,6 @@ const saveToFile = (data) => {
     }
 };
 
-// Routes
 app.get("/", (req, res) => {
     res.send("Backend działa. Użyj POST na /api/buy_ticket");
 });
@@ -103,13 +97,11 @@ app.post("/api/buy_ticket", async (req, res) => {
     }
 });
 
-// Error handling
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({ error: "Coś poszło nie tak!" });
 });
 
-// Start server
 app.listen(PORT, () => {
     console.log(`Serwer działa na porcie ${PORT}`);
 });
