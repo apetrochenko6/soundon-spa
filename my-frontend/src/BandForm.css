@@ -172,6 +172,9 @@
  }
 
  @media (max-width: 600px) {
+     .band-form {
+         gap: 5px;
+     }
 
      .two-cols {
          flex-direction: column;
@@ -188,6 +191,15 @@
      }
 
      .band-form label {
+         font-size: 20px;
+     }
+
+     .band-form input,
+     .band-form select,
+     .band-form textarea {
+         padding: 4px;
          font-size: 10px;
+         border: 2px solid black;
+         border-radius: 3px;
      }
  }
