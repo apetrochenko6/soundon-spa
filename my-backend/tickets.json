@@ -11,5 +11,18 @@
     "expiryDate": "12/33",
     "cvv": "123",
     "createdAt": "2025-06-01T09:03:57.966Z"
+  },
+  {
+    "name": "Ангеліна",
+    "surname": "Петроченко",
+    "email": "angpe995@gmail.com",
+    "phone": "0978557693",
+    "ticketType": "3day",
+    "quantity": 1,
+    "payment": "credit",
+    "cardNumber": "2132132321312123",
+    "expiryDate": "12/12",
+    "cvv": "123",
+    "createdAt": "2025-06-01T14:05:13.925Z"
   }
 ]

@@ -92,6 +92,7 @@ app.post("/api/buy_ticket", async (req, res) => {
         });
 
         saveToFile(req.body);
+        console.log("saved");
         res.json({ 
             message: "Zgłoszenie przyjęte!",
             ticketId: result
