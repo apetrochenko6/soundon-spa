@@ -412,7 +412,9 @@ html {
             font-size: 32px;
             -webkit-text-stroke: 0.4px #000;
           }
-
+          .navbar{
+            width: 100%;
+          }
           .navbar-left a {
             font-size: 14px;
             margin-right: 40px;
