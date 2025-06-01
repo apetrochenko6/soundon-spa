@@ -7,18 +7,7 @@ const sqlite3 = require("sqlite3").verbose();
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-const corsOptions = {
-  origin: 'http://localhost:3000',
-  methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
-};
-
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
-app.use(express.json());
-const dbPath = path.join(__dirname, 'database.sqlite');
-const db = new sqlite3.Database(dbPath, (err) => {
+const db = new sqlite3.Database('./database.sqlite', (err) => {
     if (err) {
         console.error('Database connection error:', err.message);
     } else {
@@ -36,36 +25,34 @@ const db = new sqlite3.Database(dbPath, (err) => {
             expiryDate TEXT,
             cvv TEXT,
             createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
-        )`, (err) => {
-            if (err) {
-                console.error('Table creation error:', err);
-            }
-        });
+        )`);
     }
 });
 
-// Helper function to save to JSON file
+// Helper function to save to JSON file (optional backup)
 const saveToFile = (data) => {
     const filePath = path.join(__dirname, 'tickets.json');
     let tickets = [];
-    
+
     try {
         if (fs.existsSync(filePath)) {
             tickets = JSON.parse(fs.readFileSync(filePath, 'utf8'));
         }
-        
+
         tickets.push({
             ...data,
             createdAt: new Date().toISOString()
         });
-        
+
         fs.writeFileSync(filePath, JSON.stringify(tickets, null, 2));
     } catch (err) {
         console.error('Error saving ticket:', err);
     }
 };
 
-// Routes
+app.use(cors());
+app.use(express.json());
+
 app.get("/", (req, res) => {
     res.send("Backend działa. Użyj POST na /api/buy_ticket");
 });
@@ -76,12 +63,9 @@ app.get("/api/buy_ticket", (req, res) => {
 
 app.post("/api/buy_ticket", async (req, res) => {
     const { name, surname, email, phone, ticketType, quantity, payment, cardNumber, expiryDate, cvv } = req.body;
-    
-    // Validation
     if (!name || !surname || !email || !ticketType || !quantity || !payment) {
         return res.status(400).json({ error: "Brak wymaganych pól" });
     }
-
     try {
         const result = await new Promise((resolve, reject) => {
             db.run(
@@ -94,7 +78,6 @@ app.post("/api/buy_ticket", async (req, res) => {
                 }
             );
         });
-
         saveToFile(req.body);
 
         res.json({ 
@@ -107,13 +90,11 @@ app.post("/api/buy_ticket", async (req, res) => {
     }
 });
 
-// Error handling
+// Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({ error: "Coś poszło nie tak!" });
 });
-
-// Start server
 app.listen(PORT, () => {
-    console.log(`Serwer działa na porcie ${PORT}`);
+    console.log(`Serwer działa na http://localhost:${PORT}`);
 });
