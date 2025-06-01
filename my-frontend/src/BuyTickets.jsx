@@ -86,16 +86,18 @@ const PaymentForm = () => {
         validationSchema: paySchema,
         onSubmit: async (values, { resetForm, setSubmitting }) => {
             try {
-                const response =await fetch(`${process.env.VITE_API_URL || 'http://localhost:4000'}/api/buy_ticket`, {
+                const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:4000'}/api/buy_ticket`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
+                    credentials: 'include', // Needed if using cookies/sessions
                     body: JSON.stringify(values),
                 });
 
                 if (!response.ok) {
-                    throw new Error("Payment processing error");
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || "Payment processing error");
                 }
 
                 const data = await response.json();
@@ -109,13 +111,13 @@ const PaymentForm = () => {
         },
     });
 
- return (
-    <div className="payment-container">
-        <TicketDetails ticketType={formik.values.ticketType} />
-      <div className="form-wrapper">
-        <form className="buy_ticket_form" onSubmit={formik.handleSubmit}>
-          
-          <div className="two-cols">
+    return (
+        <div className="payment-container">
+            <TicketDetails ticketType={formik.values.ticketType} />
+            <div className="form-wrapper">
+                <form className="buy_ticket_form" onSubmit={formik.handleSubmit}>
+
+                    <div className="two-cols">
                         <div className="form-group">
                             <label htmlFor="name">Imię</label>
                             <input
@@ -192,7 +194,7 @@ const PaymentForm = () => {
                                 onBlur={formik.handleBlur}
                                 className={formik.touched.ticketType && formik.errors.ticketType ? "error" : ""}
                             >
-                             
+
                                 <option value="1day">Bilet jednodniowy</option>
                                 <option value="3day">Bilet 3-dniowy</option>
                                 <option value="vip">VIP Pass</option>
@@ -324,21 +326,21 @@ const PaymentForm = () => {
                         </>
                     )}
                     <h2 className="submit-line">Potwierdzenie zakupu</h2>
-          <div className="form-footer">
-            <button 
-              type="submit" 
-              disabled={formik.isSubmitting}
-              className="band-form-button"
-            >
-              {formik.isSubmitting ? "Przetwarzanie..." : "Kup bilet"}
-            </button>
-          </div>
-        </form>
-      </div>
+                    <div className="form-footer">
+                        <button
+                            type="submit"
+                            disabled={formik.isSubmitting}
+                            className="band-form-button"
+                        >
+                            {formik.isSubmitting ? "Przetwarzanie..." : "Kup bilet"}
+                        </button>
+                    </div>
+                </form>
+            </div>
 
-      
-    </div>
-  );
+
+        </div>
+    );
 };
 
 export default PaymentForm;
