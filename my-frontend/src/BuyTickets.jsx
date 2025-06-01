@@ -91,20 +91,17 @@ const PaymentForm = () => {
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    credentials: 'include', // Needed if using cookies/sessions
+                    credentials: 'include', // если используешь куки или сессии
                     body: JSON.stringify(values),
                 });
 
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error || "Payment processing error");
-                }
+                const text = await response.text();
+                const data = text ? JSON.parse(text) : {};
 
-                const data = await response.json();
-                alert(data.message || "Thank you for your purchase!");
+                console.log("Ответ сервера:", data);
                 resetForm();
             } catch (error) {
-                alert(error.message || "Something went wrong!");
+                console.error("Ошибка отправки формы:", error);
             } finally {
                 setSubmitting(false);
             }
