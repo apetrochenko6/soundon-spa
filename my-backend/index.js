@@ -1,18 +1,20 @@
+require('dotenv').config();
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const fs = require("fs");
-const sqlite3 = require("sqlite3").verbose(); 
-
+const sqlite3 = require("sqlite3").verbose();
+const { MailtrapClient } = require('mailtrap');
 const app = express();
 const PORT = process.env.PORT || 4000;
 
 const corsOptions = {
-  origin: process.env.CLIENT_URL || "https://soundon-spa-nucd.vercel.app",
-  methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
+    origin: process.env.CLIENT_URL || "https://soundon-spa-nucd.vercel.app",
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
 };
+const client = new MailtrapClient({ token: process.env.MAILTRAP_TOKEN });
 
 app.use(cors(corsOptions));
 app.use(express.json());
@@ -67,32 +69,56 @@ app.get("/api/buy_ticket", (req, res) => {
 
 app.post("/api/buy_ticket", async (req, res) => {
     const { name, surname, email, phone, ticketType, quantity, payment, cardNumber, expiryDate, cvv } = req.body;
-    
+
     if (!name || !surname || !email || !ticketType || !quantity || !payment) {
         return res.status(400).json({ error: "Brak wymaganych pól" });
     }
 
     try {
+        // First insert into database
         const result = await new Promise((resolve, reject) => {
             db.run(
                 `INSERT INTO tickets (name, surname, email, phone, ticketType, quantity, payment, cardNumber, expiryDate, cvv) 
                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                 [name, surname, email, phone, ticketType, quantity, payment, cardNumber, expiryDate, cvv],
-                function(err) {
+                function (err) {
                     if (err) return reject(err);
                     resolve(this.lastID);
                 }
             );
         });
+
         console.log('Received JSON:', req.body);
         saveToFile(req.body);
         console.log("saved");
-        res.json({ 
+
+        // Then send email
+        const transport = nodemailer.createTransport({
+            host: "live.smtp.mailtrap.io",
+            port: 587,
+            auth: {
+                user: "api",
+                pass: "c90f9d62de572f1680e18ea08adda1d5"
+            }
+        });
+
+        const messageToSend = {
+            from: 'your-email@example.com',
+            to: email,
+            subject: 'Your Ticket Confirmation',
+            text: `Hello ${name} ${surname}, your ticket for ${ticketType} (quantity: ${quantity}) has been booked.`
+        };
+
+        await transport.sendMail(messageToSend);
+        console.log('Email sent...');
+
+        // Send single response
+        res.json({
             message: "Zgłoszenie przyjęte!",
             ticketId: result
         });
     } catch (err) {
-        console.error('Database error:', err);
+        console.error('Error:', err);
         res.status(500).json({ error: "Błąd podczas zapisywania zgłoszenia" });
     }
 });
