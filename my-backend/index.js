@@ -108,7 +108,7 @@ app.post("/api/buy_ticket", async (req, res) => {
 
         // Save to file
         saveToFile(req.body);
-
+        console.log(req.body);
         // Send confirmation email
         const mailOptions = {
             from: `"SoundON Tickets" <${process.env.EMAIL_FROM}>`,
@@ -144,7 +144,7 @@ app.use((err, req, res, next) => {
     });
 });
 
-// Start server
+// Start server a
 app.listen(PORT, () => {
     console.log(`Serwer działa na porcie ${PORT}`);
 });
