@@ -2,133 +2,177 @@ require('dotenv').config();
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
-const fs = require("fs");
 const nodemailer = require('nodemailer');
 const sqlite3 = require("sqlite3").verbose();
 const { MailtrapClient } = require('mailtrap');
+const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
+
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-const corsOptions = {
+// Security Middleware
+app.use(helmet());
+app.use(cors({
     origin: process.env.CLIENT_URL || "https://soundon-spa-nucd.vercel.app",
     methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
-};
-const client = new MailtrapClient({ token: process.env.MAILTRAP_TOKEN });
-
-app.use(cors(corsOptions));
+}));
 app.use(express.json());
 
-const db = new sqlite3.Database('./database.sqlite', (err) => {
+// Rate limiting
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100 // limit each IP to 100 requests per windowMs
+});
+app.use(limiter);
+
+// Database Setup
+const db = new sqlite3.Database('./database.sqlite', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
     if (err) {
         console.error('Database connection error:', err.message);
-    } else {
-        console.log('Connected to the SQLite database.');
-        db.run(`CREATE TABLE IF NOT EXISTS tickets (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT NOT NULL,
-            surname TEXT NOT NULL,
-            email TEXT NOT NULL,
-            phone TEXT,
-            ticketType TEXT NOT NULL,
-            quantity INTEGER NOT NULL,
-            payment TEXT NOT NULL,
-            cardNumber TEXT,
-            expiryDate TEXT,
-            cvv TEXT,
-            createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
-        )`);
+        process.exit(1);
     }
-});
-const saveToFile = (data) => {
-    const filePath = path.join(__dirname, 'tickets.json');
-    let tickets = [];
-    try {
-        if (fs.existsSync(filePath)) {
-            tickets = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-        }
-
-        tickets.push({
-            ...data,
-            createdAt: new Date().toISOString()
-        });
-
-        fs.writeFileSync(filePath, JSON.stringify(tickets, null, 2));
-    } catch (err) {
-        console.error('Error saving ticket:', err);
-    }
-};
-
-app.get("/", (req, res) => {
-    res.send("Backend działa. Użyj POST na /api/buy_ticket");
+    console.log('Connected to the SQLite database.');
+    initializeDatabase();
 });
 
-app.get("/api/buy_ticket", (req, res) => {
-    res.status(405).json({ message: "Metoda GET nie jest obsługiwana. Użyj POST." });
-});
+function initializeDatabase() {
+    db.run(`CREATE TABLE IF NOT EXISTS tickets (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        surname TEXT NOT NULL,
+        email TEXT NOT NULL,
+        phone TEXT,
+        ticketType TEXT NOT NULL,
+        quantity INTEGER NOT NULL,
+        payment TEXT NOT NULL,
+        cardNumber TEXT,
+        expiryDate TEXT,
+        cvv TEXT,
+        createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
+    )`, (err) => {
+        if (err) console.error('Error creating table:', err);
+    });
+}
 
-app.post("/api/buy_ticket", async (req, res) => {
-    const { name, surname, email, phone, ticketType, quantity, payment, cardNumber, expiryDate, cvv } = req.body;
-
-    if (!name || !surname || !email || !ticketType || !quantity || !payment) {
-        return res.status(400).json({ error: "Brak wymaganych pól" });
-    }
-
-    try {
-        // First insert into database
-        const result = await new Promise((resolve, reject) => {
-            db.run(
-                `INSERT INTO tickets (name, surname, email, phone, ticketType, quantity, payment, cardNumber, expiryDate, cvv) 
-                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                [name, surname, email, phone, ticketType, quantity, payment, cardNumber, expiryDate, cvv],
-                function (err) {
-                    if (err) return reject(err);
-                    resolve(this.lastID);
-                }
-            );
-        });
-
-        console.log('Received JSON:', req.body);
-        saveToFile(req.body);
-        console.log("saved");
-
-        // Then send email
-        const transport = nodemailer.createTransport({
+// Email Service
+class EmailService {
+    constructor() {
+        this.transporter = nodemailer.createTransport({
             host: "live.smtp.mailtrap.io",
             port: 587,
             auth: {
                 user: "api",
-                pass: "c90f9d62de572f1680e18ea08adda1d5"
+                pass: process.env.MAILTRAP_TOKEN
             }
         });
+        this.mailtrapClient = new MailtrapClient({ token: process.env.MAILTRAP_TOKEN });
+    }
 
-        const messageToSend = {
-            from: 'hello@sound-on.com',
-            to: email,
-            subject: 'Your Ticket Confirmation',
-            text: `Hello ${name} ${surname}, your ticket for ${ticketType} (quantity: ${quantity}) has been booked.`
-        };
+    async sendConfirmationEmail(recipientEmail, name, surname, ticketType, quantity) {
+        try {
+            const mailOptions = {
+                from: process.env.EMAIL_FROM || 'hello@sound-on.com',
+                to: recipientEmail,
+                subject: 'Your Ticket Confirmation',
+                text: `Hello ${name} ${surname}, your ticket for ${ticketType} (quantity: ${quantity}) has been booked.`,
+                html: `<p>Hello ${name} ${surname},</p>
+                       <p>Your ticket for <strong>${ticketType}</strong> (quantity: ${quantity}) has been successfully booked.</p>`
+            };
 
-        await transport.sendMail(messageToSend);
-        console.log('Email sent...');
+            await this.transporter.sendMail(mailOptions);
+            console.log('Confirmation email sent');
+        } catch (error) {
+            console.error('Error sending email:', error);
+            throw error;
+        }
+    }
+}
 
-        // Send single response
-        res.json({
-            message: "Zgłoszenie przyjęte!",
-            ticketId: result
+// Ticket Service
+class TicketService {
+    constructor(db, emailService) {
+        this.db = db;
+        this.emailService = emailService;
+    }
+
+    async createTicket(ticketData) {
+        const { name, surname, email, phone, ticketType, quantity, payment, cardNumber, expiryDate, cvv } = ticketData;
+
+        return new Promise((resolve, reject) => {
+            this.db.run(
+                `INSERT INTO tickets (
+                    name, surname, email, phone, ticketType, 
+                    quantity, payment, cardNumber, expiryDate, cvv
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                [name, surname, email, phone, ticketType, quantity, payment, cardNumber, expiryDate, cvv],
+                function (err) {
+                    if (err) return reject(err);
+                    
+                    // Send confirmation email
+                    this.emailService.sendConfirmationEmail(email, name, surname, ticketType, quantity)
+                        .then(() => resolve(this.lastID))
+                        .catch(reject);
+                }.bind(this)
+            );
         });
-    } catch (err) {
-        console.error('Error:', err);
-        res.status(500).json({ error: "Błąd podczas zapisywania zgłoszenia" });
+    }
+}
+
+// Initialize services
+const emailService = new EmailService();
+const ticketService = new TicketService(db, emailService);
+
+// Routes
+app.get("/", (req, res) => {
+    res.send("SoundON Ticket Booking API is running");
+});
+
+app.post("/api/buy_ticket", async (req, res) => {
+    const requiredFields = ['name', 'surname', 'email', 'ticketType', 'quantity', 'payment'];
+    const missingFields = requiredFields.filter(field => !req.body[field]);
+
+    if (missingFields.length > 0) {
+        return res.status(400).json({ 
+            error: "Missing required fields",
+            missingFields 
+        });
+    }
+
+    try {
+        const ticketId = await ticketService.createTicket(req.body);
+        res.json({
+            success: true,
+            message: "Ticket booked successfully!",
+            ticketId
+        });
+    } catch (error) {
+        console.error('Ticket booking error:', error);
+        res.status(500).json({ 
+            success: false,
+            error: "Failed to book ticket",
+            details: error.message 
+        });
     }
 });
 
+// Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
-    res.status(500).json({ error: "Coś poszło nie tak!" });
+    res.status(500).json({ 
+        error: "Internal server error",
+        message: err.message 
+    });
 });
 
+// Start server
 app.listen(PORT, () => {
-    console.log(`Serwer działa na porcie ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
+});
+
+process.on('SIGINT', () => {
+    db.close();
+    process.exit();
 });
