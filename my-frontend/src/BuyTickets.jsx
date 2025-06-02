@@ -91,7 +91,7 @@ const PaymentForm = () => {
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    credentials: 'include', // если используешь куки или сессии
+                    credentials: 'include',
                     body: JSON.stringify(values),
                 });
 
