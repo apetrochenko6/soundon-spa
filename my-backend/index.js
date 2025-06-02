@@ -104,7 +104,7 @@ app.post("/api/buy_ticket", async (req, res) => {
         });
 
         const messageToSend = {
-            from: 'your-email@example.com',
+            from: 'hello@sound-on.com',
             to: email,
             subject: 'Your Ticket Confirmation',
             text: `Hello ${name} ${surname}, your ticket for ${ticketType} (quantity: ${quantity}) has been booked.`
