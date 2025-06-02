@@ -140,7 +140,7 @@ app.post("/api/buy_ticket", async (req, res) => {
             missingFields 
         });
     }
-
+       
     try {
         const ticketId = await ticketService.createTicket(req.body);
         res.json({
@@ -155,6 +155,7 @@ app.post("/api/buy_ticket", async (req, res) => {
             error: "Failed to book ticket",
             details: error.message 
         });
+        console.log("saved");
     }
 });
 
