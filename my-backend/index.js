@@ -8,7 +8,7 @@ const sqlite3 = require("sqlite3").verbose();
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-app.set('trust proxy', true); // Trust proxy for rate limiting
+app.set('trust proxy', true);
 const corsOptions = {
     origin: process.env.CLIENT_URL || "https://soundon-spa-nucd.vercel.app",
     methods: ['GET', 'POST', 'OPTIONS'],
@@ -19,7 +19,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-// Database setup
 const db = new sqlite3.Database('./database.sqlite', (err) => {
     if (err) {
         console.error('Database connection error:', err.message);
@@ -43,7 +42,6 @@ const db = new sqlite3.Database('./database.sqlite', (err) => {
     }
 });
 
-// Email transporter setup
 const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST || 'smtp.gmail.com',
     port: process.env.SMTP_PORT || 587,
@@ -53,8 +51,6 @@ const transporter = nodemailer.createTransport({
         pass: process.env.EMAIL_PASSWORD
     }
 });
-
-// Helper function to save ticket data to file
 const saveToFile = (data) => {
     const filePath = path.join(__dirname, 'tickets.json');
     let tickets = [];
@@ -74,7 +70,6 @@ const saveToFile = (data) => {
     }
 };
 
-// Routes
 app.get("/", (req, res) => {
     res.send("Backend działa. Użyj POST na /api/buy_ticket");
 });
@@ -82,17 +77,12 @@ app.get("/", (req, res) => {
 app.get("/api/buy_ticket", (req, res) => {
     res.status(405).json({ message: "Metoda GET nie jest obsługiwana. Użyj POST." });
 });
-
 app.post("/api/buy_ticket", async (req, res) => {
     const { name, surname, email, phone, ticketType, quantity, payment, cardNumber, expiryDate, cvv } = req.body;
-
-    // Validate required fields
     if (!name || !surname || !email || !ticketType || !quantity || !payment) {
         return res.status(400).json({ error: "Brak wymaganych pól" });
     }
-
     try {
-        // Insert into database
         const result = await new Promise((resolve, reject) => {
             db.run(
                 `INSERT INTO tickets (name, surname, email, phone, ticketType, quantity, payment, cardNumber, expiryDate, cvv) 
@@ -105,10 +95,8 @@ app.post("/api/buy_ticket", async (req, res) => {
             );
         });
 
-        // Save to file
         saveToFile(req.body);
         console.log(req.body);
-        // Send confirmation email
         const mailOptions = {
             from: `"SoundON Tickets" <${process.env.EMAIL_FROM}>`,
             to: email,
@@ -133,8 +121,6 @@ app.post("/api/buy_ticket", async (req, res) => {
         });
     }
 });
-
-// Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({ 
@@ -143,7 +129,6 @@ app.use((err, req, res, next) => {
     });
 });
 
-// Start server a
 app.listen(PORT, () => {
     console.log(`Serwer działa na porcie ${PORT}`);
 });
