@@ -1,26 +1,60 @@
 import React from "react";
+import { useState } from "react";
 import images from "./constants/data";
+
 const Navbar = () => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
     return (
-        <>
-            <header className="header">
-                <div className="navbar">
-                    <div className="navbar-left">
-                        <a href="#section">O NAS</a>
-                        <a href="#">PARTNERZY</a>
-                        <a href="#zespoly">ARTYŚCI</a>
-                        <a href="#FAQ">FAQ</a>
-                    </div>
-                    <div className="navbar-right">
-                        <a href="#"><img src={images.YoutubeYellow} style={{ width: '55px', height: '55px' }}alt="YouTube" /></a>
-                        <a href="#"><img src={images.InstagramYellow}  style={{ width: '50px', height: '50px' }}  alt="Instagram" /></a>
-                        <a href="#"><img src={images.SpotifyYellow}style={{ width: '43px', height: '43px' }}  alt="Spotify" /></a>
+        <header className="header">
+            <div className="navbar">
+                <div className="navbar-title-mobile">SOUND ON</div>
+                
+                {/* Hamburger menu button */}
+                <div 
+                    className={`burger ${isMenuOpen ? 'open' : ''}`} 
+                    onClick={toggleMenu}
+                    aria-label="Toggle menu"
+                >
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                
+                {/* Desktop navigation */}
+                <div className="navbar-left">
+                    <a href="#section">O NAS</a>
+                    <a href="#">PARTNERZY</a>
+                    <a href="#zespoly">ARTYŚCI</a>
+                    <a href="#FAQ">FAQ</a>
+                </div>
+                
+                {/* Desktop social icons */}
+                <div className="navbar-right">
+                    <a href="#"><img src={images.YoutubeYellow} style={{ width: '55px', height: '55px' }} alt="YouTube" /></a>
+                    <a href="#"><img src={images.InstagramYellow} style={{ width: '50px', height: '50px' }} alt="Instagram" /></a>
+                    <a href="#"><img src={images.SpotifyYellow} style={{ width: '43px', height: '43px' }} alt="Spotify" /></a>
+                </div>
+                
+                {/* Mobile menu */}
+                <div className={`mobile-menu ${isMenuOpen ? 'active' : ''}`}>
+                    <a href="#section" onClick={toggleMenu}>O NAS</a>
+                    <a href="#" onClick={toggleMenu}>PARTNERZY</a>
+                    <a href="#zespoly" onClick={toggleMenu}>ARTYŚCI</a>
+                    <a href="#FAQ" onClick={toggleMenu}>FAQ</a>
+                    <div className="mobile-icons">
+                        <a href="#"><img src={images.YoutubeYellow} style={{ width: '55px', height: '55px' }} alt="YouTube" /></a>
+                        <a href="#"><img src={images.InstagramYellow} style={{ width: '50px', height: '50px' }} alt="Instagram" /></a>
+                        <a href="#"><img src={images.SpotifyYellow} style={{ width: '43px', height: '43px' }} alt="Spotify" /></a>
                     </div>
                 </div>
-            </header>
+            </div>
+        </header>
+    );
+};
 
-        </>
-
-    )
-}
-export default Navbar
+export default Navbar;
