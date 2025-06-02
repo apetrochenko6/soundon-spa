@@ -244,10 +244,6 @@
           }
         }
 
-        .mobile-menu.active+.carousel-wrapper {
-          margin-top: 0 !important;
-        }
-
         .zespol-lable {
           font-Size: 80px;
           font-Weight: 900;
