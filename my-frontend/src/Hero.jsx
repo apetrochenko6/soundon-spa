@@ -88,7 +88,9 @@ const Hero = () => {
           ))}
         </div>
       </div>
-      {showBandForm && (
+
+     
+      { showBandForm && (
         <div className="modal-overlay" onClick={handleOverlayClick}>
           <div onClick={(e) => e.stopPropagation()}> {/* This prevents click propagation */}
             <BandForm
@@ -97,7 +99,8 @@ const Hero = () => {
             />
           </div>
         </div>
-      )}
+      )
+}
       <div className="divider"></div>
       <div className="buttons">
         <a href="/buy_ticket" className="button">KUP<br />BILET</a>

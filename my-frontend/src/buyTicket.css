@@ -269,6 +269,17 @@
         padding: 14px 28px;
     }
 }
+@media (max-width: 1200px) {
+    .ticket-details {
+        margin: 0 auto;
+        order: -1;
+
+    }
+     .payment-container {
+        display: flex;
+        flex-direction: column;
+    }
+}
 
 @media (max-width: 768px) {
    
@@ -280,10 +291,7 @@
 
     }
 
-    .payment-container {
-        display: flex;
-        flex-direction: column;
-    }
+
 
     .Tickes-details {
         padding: 30px;

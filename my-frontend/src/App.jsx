@@ -6,6 +6,7 @@ import Bands from './Bands'
 import BuyTicket from './BuyTickets'
 import Footer from './Footer';
 import FAQ from './FAQ'
+import LabelSoundon from './Label'
 function App() {
 
   return <>
@@ -15,7 +16,9 @@ function App() {
         <Route path="/" element={
           <>
             <Navbar />
-            <section id="section"><Hero id="section"/></section>
+            <LabelSoundon/>
+            <section id="section"><Hero id="section"/>
+            </section>
             <section id="zespoly"><Bands /></section>
             
              <section id="FAQ"><FAQ/></section>

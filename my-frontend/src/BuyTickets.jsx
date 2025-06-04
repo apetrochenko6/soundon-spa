@@ -37,6 +37,7 @@ const TicketDetails = ({ ticketType }) => {
             </ul>
             <h3>
                 Cena: {
+                     
                     ticketType === "1day"
                         ? "10 PLN"
                         : ticketType === "3day"
@@ -98,10 +99,10 @@ const PaymentForm = () => {
                 const text = await response.text();
                 const data = text ? JSON.parse(text) : {};
 
-                console.log("Ответ сервера:", data);
+                console.log("Odpowiedz serweru", data);
                 resetForm();
             } catch (error) {
-                console.error("Ошибка отправки формы:", error);
+                console.error("Error", error);
             } finally {
                 setSubmitting(false);
             }
@@ -191,7 +192,7 @@ const PaymentForm = () => {
                                 onBlur={formik.handleBlur}
                                 className={formik.touched.ticketType && formik.errors.ticketType ? "error" : ""}
                             >
-
+                                <option value="--">Wybierz bilet</option>
                                 <option value="1day">Bilet jednodniowy</option>
                                 <option value="3day">Bilet 3-dniowy</option>
                                 <option value="vip">VIP Pass</option>
