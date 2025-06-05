@@ -586,9 +586,7 @@
         @media (max-width: 800px) {
 
 
-          .divider {
-            height: 35px;
-          }
+          
 
           .zespol-lable {
             font-size: 65px;
@@ -636,11 +634,11 @@
 
           .divider {
             margin-top: 5px;
-            height: 15px;
+            height: 17px;
           }
 
           .yellow-divider {
-            height: 15px;
+            height: 17px;
 
           }
 
