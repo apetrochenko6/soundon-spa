@@ -108,6 +108,7 @@
 @media (max-width: 768px) {
   .faq-section {
     padding: 40px 15px;
+     border: 30px solid #000;
   }
   
   .faq-title {
