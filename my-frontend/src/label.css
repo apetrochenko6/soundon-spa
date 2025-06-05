@@ -134,43 +134,49 @@
 }
 
 @media (max-width: 600px) {
-  .custom-label {
-    width: 350px;
-    height: auto;
-    top: auto;
-    bottom: 20px;
-    right: 10px;
-  }
+    .custom-label {
+        width: 350px;
+        height: auto;
+        top: auto;
+        bottom: 440px;
+       
+    }
 
-  .label-text h2 {
-    font-size: 40px;
-    line-height: 1.2;
-  }
+    .leftright,
+    .rightleft {
+        width: 40px;
 
-  .label-text p {
-    font-size: 14px;
-  }
+    }
 
-  .label-pin {
-    width: 50px;
-    height: 50px;
-    top: -25px;
-    left: -25px;
-  }
+    .label-text h2 {
+        font-size: 40px;
+        line-height: 1.2;
+    }
 
-  .label-pin::before,
-  .label-pin::after {
-    width: 25px;
-  }
+    .label-text p {
+        font-size: 14px;
+    }
 
-  .custom-label.collapsed {
-    transform: translateX(320px);
-  }
+    .label-pin {
+        width: 50px;
+        height: 50px;
+        top: -25px;
+        left: -25px;
+    }
 
-  .custom-label::before {
-    width: 50px;
-    height: 50px;
-    font-size: 22px;
-    left: -25px;
-  }
+    .label-pin::before,
+    .label-pin::after {
+        width: 25px;
+    }
+
+    .custom-label.collapsed {
+        transform: translateX(320px);
+    }
+
+    .custom-label::before {
+        width: 50px;
+        height: 50px;
+        font-size: 22px;
+        left: -25px;
+    }
 }
