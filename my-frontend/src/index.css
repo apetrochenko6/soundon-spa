@@ -600,6 +600,9 @@
 
         @media (max-width: 800px) {
 
+          .carousel-controls{
+              display: none;
+          }
           .carousel {
             aspect-ratio: auto;
             height: 400px;
@@ -667,7 +670,7 @@
 
         }
  @media (max-width: 600px) {
-    .carousel-indicators {
+          .carousel-indicators{
             display: none;
           }
           .buttons {
