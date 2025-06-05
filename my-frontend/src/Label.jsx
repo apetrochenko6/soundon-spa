@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Label.css";
+import "./label.css";
 
 const LabelSoundon = () => {
   const [collapsed, setCollapsed] = useState(false);
