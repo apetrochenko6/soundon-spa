@@ -580,9 +580,7 @@
 
 
         @media (max-width: 800px) {
-          .carousel-indicators {
-            display: none;
-          }
+        
 
           .divider {
             height: 35px;
@@ -617,10 +615,6 @@
           }
 
 
-
-          .buttons {
-            flex-direction: column;
-          }
 
 
           .navbar-left {
@@ -673,6 +667,13 @@
 
         }
  @media (max-width: 600px) {
+    .carousel-indicators {
+            display: none;
+          }
+          .buttons {
+            flex-direction: column;
+          }
+
         .band-card {
             width: 350px;
           }
