@@ -54,7 +54,9 @@ const Hero = () => {
   }, []);
   return (
     <>
+    
       <div className="carousel-wrapper">
+       
         <div className="carousel-controls">
           <button onClick={handlePrev} aria-label="Previous Slide">❮</button>
           <button onClick={handleNext} aria-label="Next Slide">❯</button>

@@ -302,10 +302,11 @@
           background-color: #000;
           margin-top: 10px;
         }
-        .buttons p{
-            font-size: 45px;
-            font-weight: 900
-          }
+
+        .buttons p {
+          font-size: 45px;
+          font-weight: 900
+        }
 
         .buttons {
           display: flex;
@@ -583,7 +584,7 @@
 
 
         @media (max-width: 800px) {
-        
+
 
           .divider {
             height: 35px;
@@ -603,9 +604,10 @@
 
         @media (max-width: 800px) {
 
-          .carousel-controls{
-              display: none;
+          .carousel-controls {
+            display: none;
           }
+
           .carousel {
             aspect-ratio: auto;
             height: 400px;
@@ -656,7 +658,7 @@
           }
 
 
-          
+
 
           .band-card h3 {
             font-family: 'Work Sans', sans-serif;
@@ -672,25 +674,43 @@
           }
 
         }
- @media (max-width: 600px) {
 
-          .carousel-wrapper{
+        @media (max-width: 600px) {
+          .label-for-mobile {
+            display: flex;
+            right: 0px;
+            top: 400px;
+            background-color: #FFCC00;
+            padding: 10px 20px;
+            position: absolute;
+            z-index: 2;
+            
+            font-weight: 900;
+            color: #000000;
+            box-shadow: 12px 12px #000000;
+          }
+
+          .carousel-wrapper {
             max-width: 95%;
           }
-          .carousel-indicators{
+
+          .carousel-indicators {
             display: none;
           }
+
           .buttons {
             flex-direction: column;
           }
-          .buttons a.button{
+
+          .buttons a.button {
             font-size: 40px;
           }
-          .buttons p{
+
+          .buttons p {
             font-size: 35px;
           }
 
-        .band-card {
+          .band-card {
             width: 350px;
           }
 
