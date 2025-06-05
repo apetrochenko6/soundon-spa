@@ -302,7 +302,10 @@
           background-color: #000;
           margin-top: 10px;
         }
-
+        .buttons p{
+            font-size: 45px;
+            font-weight: 900
+          }
 
         .buttons {
           display: flex;
@@ -670,11 +673,21 @@
 
         }
  @media (max-width: 600px) {
+
+          .carousel-wrapper{
+            max-width: 95%;
+          }
           .carousel-indicators{
             display: none;
           }
           .buttons {
             flex-direction: column;
+          }
+          .buttons a.button{
+            font-size: 40px;
+          }
+          .buttons p{
+            font-size: 35px;
           }
 
         .band-card {
