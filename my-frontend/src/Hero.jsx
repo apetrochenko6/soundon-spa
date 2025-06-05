@@ -104,7 +104,7 @@ const Hero = () => {
       )
 }
       <div className="divider"></div>
-      <div className="buttons" style={{paddingBottom:"60px"}}>
+      <div className="buttons" style={{paddingBottom:"50px"}}>
         <a href="/buy_ticket" className="button buy">KUP<br />BILET</a>
         <p>lub</p>
         <a href="#" className="button apply" onClick={() => setShowBandForm(true)}

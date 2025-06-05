@@ -609,7 +609,7 @@
           }
 
           .carousel {
-            aspect-ratio: auto;
+          
             height: 400px;
           }
 
@@ -618,9 +618,7 @@
           }
 
 
-          .carousel {
-            aspect-ratio: 16 / 7;
-          }
+          
 
 
 
@@ -676,6 +674,9 @@
         }
 
         @media (max-width: 600px) {
+          .carousel{
+            height: 350px;
+          }
           .buttons a.buy {
             align-self: flex-start;
           }
