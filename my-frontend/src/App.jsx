@@ -32,11 +32,16 @@ function App() {
             <Navbar />
             <div style={{
               minHeight: '100vh',
-                background: 'linear-gradient(to right, #000000, #434343)', 
+                  background: 'radial-gradient(circle at center, #1a1a1a, #000)',
             
             }}>
 
               <BuyTicket />
+              <div style={{marginTop:"180px"}}>
+                <div className='divider'></div>
+                 <Footer />
+              </div>
+              
              
             </div>
 
