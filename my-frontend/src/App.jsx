@@ -32,7 +32,7 @@ function App() {
             <Navbar />
             <div style={{
               minHeight: '100vh',
-                  background: 'radial-gradient(circle at center, #1a1a1a, #000)',
+                  background: 'radial-gradient(circle at center,rgb(36, 36, 36), #000)',
             
             }}>
 
