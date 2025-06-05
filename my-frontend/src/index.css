@@ -576,7 +576,9 @@
         
 
         @media (max-width: 800px) {
-         
+         .carousel-controls {
+          display: none;
+         }
 
           .divider {
             height: 35px;
