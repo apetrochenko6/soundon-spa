@@ -149,8 +149,8 @@
       transition: transform 0.2s;
     }
 
-    .leftright,
-    .rightleft {
+    .band-closer .leftright,
+     .band-closer .rightleft {
       height: 4px;
       width: 40px;
       position: absolute;

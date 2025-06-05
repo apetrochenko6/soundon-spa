@@ -467,24 +467,28 @@
           text-decoration: none;
           border-radius: 10px;
         }
+
         @media (max-width: 1660px) {
-          .band-card{
+          .band-card {
             width: 700px;
           }
-          .band-image{
+
+          .band-image {
             width: 600px;
           }
         }
+
         @media (max-width: 1200px) {
-          .band-image{
+          .band-image {
             width: 400px;
           }
+
           .zespol-lable {
             font-size: 80px;
             max-width: 550px;
           }
 
-         
+
 
           .carousel-wrapper {
             margin: 15px auto 8px auto;
@@ -534,7 +538,7 @@
             -webkit-text-stroke: 0.4px #000;
           }
 
-          
+
           .navbar {
             width: 100%;
             height: 60px;
@@ -573,12 +577,12 @@
           }
         }
 
-        
+
 
         @media (max-width: 800px) {
-         .carousel-controls {
-          display: none;
-         }
+          .carousel-indicators {
+            display: none;
+          }
 
           .divider {
             height: 35px;
@@ -606,41 +610,18 @@
           .carousel-images img {
             height: 400px;
           }
-          
-          .band-image{
-            width: 375px;
-          }
+
+
           .carousel {
             aspect-ratio: 16 / 7;
           }
 
-          .carousel-controls button:first-child {
-            margin-left: -80px;
-          }
-
-          .carousel-controls button:last-child {
-            margin-right: -80px;
-          }
-
-          .carousel-controls button {
-            display: none;
-          }
 
 
-          .buttons a.button {
-            padding: 8px 20px 8px 8px;
-            font-size: 18px;
-            width: 200px;
-            box-shadow: -5px 5px 0 #000;
+          .buttons {
+            flex-direction: column;
           }
 
-          .buttons a.button:hover {
-            box-shadow: -3px 3px 0 #000;
-          }
-
-          .buttons a.or {
-            font-size: 16px;
-          }
 
           .navbar-left {
             width: 100%;
@@ -675,7 +656,7 @@
           }
 
 
-
+          
 
           .band-card h3 {
             font-family: 'Work Sans', sans-serif;
@@ -690,4 +671,13 @@
             font-size: 15px;
           }
 
+        }
+ @media (max-width: 600px) {
+        .band-card {
+            width: 350px;
+          }
+
+          .band-image {
+            width: 350px;
+          }
         }
