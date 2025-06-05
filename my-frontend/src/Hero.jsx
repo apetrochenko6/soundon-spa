@@ -103,6 +103,7 @@ const Hero = () => {
         </div>
       )
 }
+
       <div className="divider"></div>
       <div className="buttons" style={{paddingBottom:"50px"}}>
         <a href="/buy_ticket" className="button buy">KUP<br />BILET</a>
