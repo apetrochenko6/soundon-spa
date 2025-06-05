@@ -676,6 +676,13 @@
         }
 
         @media (max-width: 600px) {
+         .buttons a.buy {
+    align-self: flex-start;
+  }
+
+  .buttons a.apply {
+    align-self: flex-end;
+  }
           .label-for-mobile {
             display: flex;
             right: 0px;

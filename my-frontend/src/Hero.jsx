@@ -105,9 +105,9 @@ const Hero = () => {
 }
       <div className="divider"></div>
       <div className="buttons">
-        <a href="/buy_ticket" className="button">KUP<br />BILET</a>
+        <a href="/buy_ticket" className="button buy">KUP<br />BILET</a>
         <p>lub</p>
-        <a href="#" className="button" onClick={() => setShowBandForm(true)}
+        <a href="#" className="button apply" onClick={() => setShowBandForm(true)}
         >ZGŁOŚ<br />ZESPÓŁ</a>
       </div>
       <div className="yellow-divider"></div>
