@@ -26,9 +26,9 @@ const Footer = () => {
         </div>
 
         <div className="footer-sponsors">
-          <img src={images.InstagramBlack} style={{ width: '55px', height: '55px' }} alt="instagram_logo" />
-          <img src={images.SpotifyBlack}  alt="spotify_logo" />
-          <img src={images.YoutubeBlack} style={{ width: '57px', height: '57px' }} alt="youtube_logo" />
+          <img src={images.InstagramBlack}  alt="instagram_logo" className="instagram_logo" />
+          <img src={images.SpotifyBlack}  alt="spotify_logo" className="spotify_logo"/>
+          <img src={images.YoutubeBlack}  alt="youtube_logo" className="youtube_logo" />
         </div>
       </div>
 

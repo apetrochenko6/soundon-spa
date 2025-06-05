@@ -162,7 +162,15 @@
     margin-top: 20px;
     text-align: center;
 }
-
+.instagram_logo{
+            width: 55px;
+            height: 55px; 
+    }
+    
+    .youtube_logo{
+            width: 57px;
+            height: 57px; 
+    }
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
     .footer-nav-link,
@@ -206,6 +214,18 @@
 }
 
 @media (max-width: 480px) {
+    .instagram_logo{
+            width: 40px;
+            height: 40px; 
+    }
+    .spotify_logo{
+            width: 40px;
+            height: 40px; 
+    }
+    .youtube_logo{
+            width: 42px;
+            height: 42px; 
+    }
     .footer-nav-link,
     .footer-partner-link {
         font-size: 18px;
