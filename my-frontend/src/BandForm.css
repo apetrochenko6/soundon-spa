@@ -195,6 +195,7 @@
     }
 
 /* Media query for very small devices */
+
 @media (max-width: 780px) {
     .band-form {
         padding: 15px;

@@ -167,11 +167,11 @@
           width: 26px;
           height: 18px;
           cursor: pointer;
-          
+
           margin-right: 20px;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 800px) {
 
           .navbar-left,
           .navbar-right {
@@ -222,7 +222,7 @@
           border-radius: 1px;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 800px) {
           .navbar {
             justify-content: space-between;
             align-items: center;
@@ -245,7 +245,7 @@
         }
 
         .zespol-lable {
-          font-Size: 80px;
+          font-Size: 90px;
           font-Weight: 900;
           background-Color: #FFCC00;
           font-Family: Work Sans;
@@ -467,8 +467,24 @@
           text-decoration: none;
           border-radius: 10px;
         }
-
+        @media (max-width: 1660px) {
+          .band-card{
+            width: 700px;
+          }
+          .band-image{
+            width: 600px;
+          }
+        }
         @media (max-width: 1200px) {
+          .band-image{
+            width: 400px;
+          }
+          .zespol-lable {
+            font-size: 80px;
+            max-width: 550px;
+          }
+
+         
 
           .carousel-wrapper {
             margin: 15px auto 8px auto;
@@ -518,10 +534,7 @@
             -webkit-text-stroke: 0.4px #000;
           }
 
-          .navbar-right {
-            display: none;
-          }
-
+          
           .navbar {
             width: 100%;
             height: 60px;
@@ -560,7 +573,11 @@
           }
         }
 
-        @media (max-width: 768px) {
+        
+
+        @media (max-width: 800px) {
+         
+
           .divider {
             height: 35px;
           }
@@ -577,7 +594,7 @@
 
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 800px) {
 
           .carousel {
             aspect-ratio: auto;
@@ -587,16 +604,10 @@
           .carousel-images img {
             height: 400px;
           }
-
-          .band-image {
-            max-width: 350px;
+          
+          .band-image{
+            width: 400px;
           }
-
-          .band-card {
-            max-width: 350px;
-          }
-
-
           .carousel {
             aspect-ratio: 16 / 7;
           }

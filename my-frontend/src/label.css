@@ -52,8 +52,8 @@
     transition: transform 0.2s;
 }
 
-.leftright,
-.rightleft {
+.custom-label .leftright,
+.custom-label .rightleft {
     height: 4px;
     width: 60px;
     position: absolute;

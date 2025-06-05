@@ -23,6 +23,7 @@ const data = [
         genre: "Garage Rock",
         spotify: "https://open.spotify.com/artist/...",
     },
+     
 
 
 ];
@@ -35,26 +36,28 @@ const sliderSettings = {
     slidesToShow: 3,
     slidesToScroll: 1,
     responsive: [
+       
         {
-            breakpoint: 1400,
+            breakpoint: 1640,
             settings: {
                 slidesToShow: 2,
             },
 
         },
         {
-            breakpoint: 600,
+            breakpoint: 800,
             settings: {
                 slidesToShow: 1,
             },
         },
+         
     ],
 };
 
 const Bands = () => {
 
     return (
-        <div style={{ backgroundColor: "#000", padding: "30px 0 60px 0" }}>
+        <div style={{ backgroundColor: "#000", padding: "30px 0 90px 0" }}>
             <h1
                 className="zespol-lable"
             >
@@ -62,7 +65,7 @@ const Bands = () => {
             </h1>
             <div
                 style={{
-                    maxWidth: "1800px",
+                    maxWidth: "2000px",
                     margin: "0 auto",
                 }}
             >

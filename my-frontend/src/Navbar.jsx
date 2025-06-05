@@ -44,11 +44,7 @@ const Navbar = () => {
                     <a href="#" onClick={toggleMenu}>PARTNERZY</a>
                     <a href="#zespoly" onClick={toggleMenu}>ARTYŚCI</a>
                     <a href="#FAQ" onClick={toggleMenu}>FAQ</a>
-                    <div className="mobile-icons">
-                        <a href="#"><img src={images.YoutubeYellow} style={{ width: '55px', height: '55px' }} alt="YouTube" /></a>
-                        <a href="#"><img src={images.InstagramYellow} style={{ width: '50px', height: '50px' }} alt="Instagram" /></a>
-                        <a href="#"><img src={images.SpotifyYellow} style={{ width: '43px', height: '43px' }} alt="Spotify" /></a>
-                    </div>
+                    
                 </div>
             </div>
         </header>
