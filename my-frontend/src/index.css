@@ -676,13 +676,14 @@
         }
 
         @media (max-width: 600px) {
-         .buttons a.buy {
-    align-self: flex-start;
-  }
+          .buttons a.buy {
+            align-self: flex-start;
+          }
 
-  .buttons a.apply {
-    align-self: flex-end;
-  }
+          .buttons a.apply {
+            align-self: flex-end;
+          }
+
           .label-for-mobile {
             display: flex;
             right: 0px;
@@ -691,7 +692,7 @@
             padding: 10px 20px;
             position: absolute;
             z-index: 2;
-            
+
             font-weight: 900;
             color: #000000;
             box-shadow: 12px 12px #000000;
@@ -714,7 +715,7 @@
           }
 
           .buttons p {
-            font-size: 35px;
+            font-size: 30px;
           }
 
           .band-card {
