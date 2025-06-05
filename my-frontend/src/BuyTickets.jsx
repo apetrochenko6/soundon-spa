@@ -37,7 +37,7 @@ const TicketDetails = ({ ticketType }) => {
             </ul>
             <h3>
                 Cena: {
-                     
+
                     ticketType === "1day"
                         ? "10 PLN"
                         : ticketType === "3day"
@@ -68,6 +68,13 @@ const paySchema = Yup.object().shape({
     cvv: Yup.string()
         .matches(/^\d{3,4}$/, "3-4 cyfry")
         .required("Wymagane"),
+    blikCode: Yup.string()
+    .when('payment', {
+      is: 'blik',
+      then: Yup.string()
+        .matches(/^\d{6}$/, "6-cyfrowy kod BLIK")
+        .required("Wymagane")
+    })
 });
 
 const PaymentForm = () => {
@@ -83,6 +90,7 @@ const PaymentForm = () => {
             cardNumber: "",
             expiryDate: "",
             cvv: "",
+            blikCode: ""
         },
         validationSchema: paySchema,
         onSubmit: async (values, { resetForm, setSubmitting }) => {
@@ -322,6 +330,29 @@ const PaymentForm = () => {
                                 </div>
                             </div>
                         </>
+                    )}
+                    {formik.values.payment === "blik" && (
+                        <div className="form-group">
+                            <label htmlFor="blikCode">Kod BLIK:</label>
+                            <input
+                                id="blikCode"
+                                name="blikCode"
+                                type="text"
+                                placeholder="6-cyfrowy kod"
+                                value={formik.values.blikCode}
+                                onChange={(e) => {
+                                    const value = e.target.value.replace(/\D/g, '');
+                                    formik.setFieldValue('blikCode', value);
+                                }}
+                                onBlur={formik.handleBlur}
+                                maxLength={6}
+                                className={formik.touched.blikCode && formik.errors.blikCode ? "error" : ""}
+                            />
+                            {formik.touched.blikCode && formik.errors.blikCode && (
+                                <div className="error-message">{formik.errors.blikCode}</div>
+                            )}
+                            <p className="blik-hint">Otwórz aplikację bankową i wprowadź powyższy kod</p>
+                        </div>
                     )}
                     <h2 className="submit-line">Potwierdzenie zakupu</h2>
                     <div className="form-footer">

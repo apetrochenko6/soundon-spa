@@ -37,6 +37,7 @@ const db = new sqlite3.Database('./database.sqlite', (err) => {
             cardNumber TEXT,
             expiryDate TEXT,
             cvv TEXT,
+            blikCode TEXT,
             createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
         )`);
     }
