@@ -134,53 +134,43 @@
 }
 
 @media (max-width: 600px) {
-    .custom-label {
-        padding: 5px 0px 10px 15px;
-        position: absolute;
-        width: 300px;
-        height: auto;
-        top: auto;
-    right: -20px;
-    top: 300px;
-    }
+  .custom-label {
+    width: 350px;
+    height: auto;
+    top: auto;
+    bottom: 20px;
+    right: 10px;
+  }
 
-    .sticky-label {
-        position: absolute;
-    }
+  .label-text h2 {
+    font-size: 40px;
+    line-height: 1.2;
+  }
 
+  .label-text p {
+    font-size: 14px;
+  }
 
+  .label-pin {
+    width: 50px;
+    height: 50px;
+    top: -25px;
+    left: -25px;
+  }
 
-    .label-text h2 {
-        font-size: 45px;
-        font-weight: bolder;
-        color: #000;
+  .label-pin::before,
+  .label-pin::after {
+    width: 25px;
+  }
 
-        line-height: 40px;
-    }
+  .custom-label.collapsed {
+    transform: translateX(320px);
+  }
 
-    .custom-label.collapsed {
-    transform: translateX(100px);
-}
-    .label-text p {
-        font-size: 10px;
-        color: #000;
-        margin: 0;
-        font-weight: bold;
-    }
-
-.leftright,
-.rightleft {
- 
-    width: 40px;
-    
-}
-
-    .label-pin {
-        width: 50px;
-        height: 50px;
-        top: -25px;
-        left: -25px;
-    }
-
-    
+  .custom-label::before {
+    width: 50px;
+    height: 50px;
+    font-size: 22px;
+    left: -25px;
+  }
 }
