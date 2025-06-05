@@ -86,9 +86,9 @@ app.post("/api/buy_ticket", async (req, res) => {
     try {
         const result = await new Promise((resolve, reject) => {
             db.run(
-                `INSERT INTO tickets (name, surname, email, phone, ticketType, quantity, payment, cardNumber, expiryDate, cvv) 
+                `INSERT INTO tickets (name, surname, email, phone, ticketType, quantity, payment, cardNumber, expiryDate, cvv,blikCode) 
                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                [name, surname, email, phone, ticketType, quantity, payment, cardNumber, expiryDate, cvv],
+                [name, surname, email, phone, ticketType, quantity, payment, cardNumber, expiryDate, cvv, blikCode],
                 function (err) {
                     if (err) return reject(err);
                     resolve(this.lastID);
