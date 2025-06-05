@@ -158,7 +158,9 @@
         line-height: 40px;
     }
 
-
+    .custom-label.collapsed {
+    transform: translateX(100px);
+}
     .label-text p {
         font-size: 10px;
         color: #000;
