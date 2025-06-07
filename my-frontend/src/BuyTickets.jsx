@@ -60,8 +60,12 @@ const paySchema = Yup.object().shape({
     quantity: Yup.number().min(1, "Minimum 1 ticket").required("Wymagane"),
     payment: Yup.string().required("Wybierz metodę płatności"),
     cardNumber: Yup.string()
+    .when('payment', {
+      is: 'credit',
+      then: Yup.string()
         .matches(/^\d{16}$/, "Musi zawierać 16 cyfr")
         .required("Wymagane"),
+        }),
     expiryDate: Yup.string()
         .matches(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/, "MM/YY format")
         .required("Wymagane"),
@@ -69,8 +73,12 @@ const paySchema = Yup.object().shape({
         .matches(/^\d{3,4}$/, "3-4 cyfry")
         .required("Wymagane"),
     blikCode: Yup.string()
+    .when('payment', {
+      is: 'blik',
+      then: Yup.string()
         .matches(/^\d{6}$/, "6-cyfrowy kod BLIK")
         .required("Wymagane")
+    })
 });
 
 const PaymentForm = () => {
