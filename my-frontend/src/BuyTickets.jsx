@@ -50,93 +50,111 @@ const TicketDetails = ({ ticketType }) => {
         </div>
     );
 };
+
+// ... (keep your existing ticketDescriptions and TicketDetails components)
+
+// Fixed validation schema
 const paySchema = Yup.object().shape({
   name: Yup.string().required("Wymagane"),
   surname: Yup.string().required("Wymagane"),
   email: Yup.string().email("Nieprawidłowy adres e-mail").required("Wymagane"),
   phone: Yup.string().required("Wymagane"),
-  ticketType: Yup.string()
-    .required("Wybierz rodzaj biletu")
-    .notOneOf(["--"], "Wybierz rodzaj biletu"),
+  ticketType: Yup.string().required("Wybierz rodzaj biletu"),
   quantity: Yup.number().min(1, "Minimum 1 bilet").required("Wymagane"),
   payment: Yup.string().required("Wybierz metodę płatności"),
 
-  // Credit card fields
-  cardNumber: Yup.string().when('payment', {
-    is: (value) => value === 'credit',
-    then: Yup.string()
-      .matches(/^\d{16}$/, "Musi zawierać 16 cyfr")
-      .required("Wymagane"),
-    otherwise: Yup.string().notRequired()
-  }),
+  cardNumber: Yup.string()
+    .when('payment', {
+      is: 'credit',
+      then: Yup.string()
+        .matches(/^\d{16}$/, "Musi zawierać 16 cyfr")
+        .required("Wymagane"),
+      otherwise: Yup.string().notRequired()
+    }),
 
-  expiryDate: Yup.string().when('payment', {
-    is: (value) => value === 'credit',
-    then: Yup.string()
-      .matches(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/, "Format MM/YY")
-      .required("Wymagane"),
-    otherwise: Yup.string().notRequired()
-  }),
+  expiryDate: Yup.string()
+    .when('payment', {
+      is: 'credit',
+      then: Yup.string()
+        .matches(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/, "Format MM/YY")
+        .required("Wymagane"),
+      otherwise: Yup.string().notRequired()
+    }),
 
-  cvv: Yup.string().when('payment', {
-    is: (value) => value === 'credit',
-    then: Yup.string()
-      .matches(/^\d{3,4}$/, "3-4 cyfry")
-      .required("Wymagane"),
-    otherwise: Yup.string().notRequired()
-  }),
+  cvv: Yup.string()
+    .when('payment', {
+      is: 'credit',
+      then: Yup.string()
+        .matches(/^\d{3,4}$/, "3-4 cyfry")
+        .required("Wymagane"),
+      otherwise: Yup.string().notRequired()
+    }),
 
-  // BLIK code
   blikCode: Yup.string().when('payment', {
-    is: (value) => value === 'blik',
-    then: Yup.string()
-      .matches(/^\d{6}$/, "6-cyfrowy kod BLIK")
-      .required("Wymagane"),
-    otherwise: Yup.string().notRequired()
-  })
+  is: 'blik',
+  then: Yup.string()
+    .matches(/^\d{6}$/, "6-cyfrowy kod BLIK")
+    .required("Wymagane"),
+  otherwise: Yup.string().notRequired()
+})
 });
-const PaymentForm = () => {
-    const [submitError, setSubmitError] = useState(null);
-    const [submitSuccess, setSubmitSuccess] = useState(false);
-    const formik = useFormik({
-        initialValues: {
-            name: "",
-            surname: "",
-            email: "",
-            phone: "",
-             ticketType: "--",
-            quantity: 1,
-            payment: "",
-            cardNumber: "",
-            expiryDate: "",
-            cvv: "",
-            blikCode: ""
-        },
-        validationSchema: paySchema,
-        onSubmit: async (values, { resetForm, setSubmitting }) => {
-            try {
-                const response = await fetch(`https://soundon-spa.onrender.com/api/buy_ticket`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    credentials: 'include',
-                    body: JSON.stringify(values),
-                });
 
-                const text = await response.text();
-                const data = text ? JSON.parse(text) : {};
-                     setSubmitSuccess(true);
-                console.log("Odpowiedz serweru", data);
-                resetForm();
-            } catch (error) {
-                console.error("Error", error);
-            } finally {
-                setSubmitting(false);
-            }
-        },
-    });
-    React.useEffect(() => {
+const PaymentForm = () => {
+  const [submitError, setSubmitError] = useState(null);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      surname: "",
+      email: "",
+      phone: "",
+      ticketType: "--", // Matches your select's default value
+      quantity: 1,
+      payment: "",
+      cardNumber: "",
+      expiryDate: "",
+      cvv: "",
+      blikCode: ""
+    },
+    validationSchema: paySchema,
+    onSubmit: async (values, { resetForm, setSubmitting }) => {
+      setSubmitError(null);
+      setSubmitSuccess(false);
+      
+      try {
+        const response = await fetch(`https://soundon-spa.onrender.com/api/buy_ticket`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: 'include',
+          body: JSON.stringify({
+            ...values,
+            quantity: Number(values.quantity) // Ensure quantity is a number
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        console.log("Server response:", data);
+        
+        setSubmitSuccess(true);
+        resetForm();
+      } catch (error) {
+        console.error("Error:", error);
+        setSubmitError("Wystąpił błąd podczas przetwarzania płatności. Spróbuj ponownie.");
+      } finally {
+        setSubmitting(false);
+      }
+    },
+  });
+
+  // Clear payment fields when payment method changes
+  React.useEffect(() => {
     if (formik.values.payment !== 'credit') {
       formik.setFieldValue('cardNumber', '');
       formik.setFieldValue('expiryDate', '');
@@ -147,10 +165,12 @@ const PaymentForm = () => {
     }
   }, [formik.values.payment]);
 
-    return (
-        <div className="payment-container">
-            <TicketDetails ticketType={formik.values.ticketType} />
-             {submitError && (
+  return (
+    <div className="payment-container">
+      <TicketDetails ticketType={formik.values.ticketType} />
+      
+      {/* Error message */}
+      {submitError && (
         <div className="error-message" style={{ marginBottom: '20px' }}>
           {submitError}
         </div>
@@ -162,7 +182,9 @@ const PaymentForm = () => {
           Płatność zakończona sukcesem!
         </div>
       )}
-            <div className="form-wrapper">
+
+      {/* ... (keep your existing form JSX) ... */}
+      <div className="form-wrapper">
                 <form className="buy_ticket_form" onSubmit={formik.handleSubmit}>
 
                     <div className="two-cols">
@@ -408,10 +430,8 @@ const PaymentForm = () => {
                     </div>
                 </form>
             </div>
-
-
-        </div>
-    );
+    </div>
+  );
 };
 
 export default PaymentForm;
