@@ -79,15 +79,15 @@ app.get("/api/buy_ticket", (req, res) => {
     res.status(405).json({ message: "Metoda GET nie jest obsługiwana. Użyj POST." });
 });
 app.post("/api/buy_ticket", async (req, res) => {
-    const { name, surname, email, phone, ticketType, quantity, payment, cardNumber, expiryDate, cvv } = req.body;
+    const { name, surname, email, phone, ticketType, quantity, payment, cardNumber, expiryDate, cvv ,blikCode} = req.body;
     if (!name || !surname || !email || !ticketType || !quantity || !payment) {
         return res.status(400).json({ error: "Brak wymaganych pól" });
     }
     try {
         const result = await new Promise((resolve, reject) => {
             db.run(
-                `INSERT INTO tickets (name, surname, email, phone, ticketType, quantity, payment, cardNumber, expiryDate, cvv,blikCode) 
-                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                `INSERT INTO tickets (name, surname, email, phone, ticketType, quantity, payment, cardNumber, expiryDate, cvv, blikCode) 
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                 [name, surname, email, phone, ticketType, quantity, payment, cardNumber, expiryDate, cvv, blikCode],
                 function (err) {
                     if (err) return reject(err);
