@@ -52,33 +52,41 @@ const TicketDetails = ({ ticketType }) => {
 };
 
 const paySchema = Yup.object().shape({
-    name: Yup.string().required("Wymagane"),
-    surname: Yup.string().required("Wymagane"),
-    email: Yup.string().email("Nieprawidłowy adres e-mail").required("Wymagane"),
-    phone: Yup.string().required("Wymagane"),
-    ticketType: Yup.string().required("Wybierz rodzaj biletu"),
-    quantity: Yup.number().min(1, "Minimum 1 ticket").required("Wymagane"),
-    payment: Yup.string().required("Wybierz metodę płatności"),
-    cardNumber: Yup.string()
+  name: Yup.string().required("Wymagane"),
+  surname: Yup.string().required("Wymagane"),
+  email: Yup.string().email("Nieprawidłowy adres e-mail").required("Wymagane"),
+  phone: Yup.string().required("Wymagane"),
+  ticketType: Yup.string().required("Wybierz rodzaj biletu"),
+  quantity: Yup.number().min(1, "Minimum 1 ticket").required("Wymagane"),
+  payment: Yup.string().required("Wybierz metodę płatności"),
+  cardNumber: Yup.string()
+    .matches(/^\d{16}$/, "Musi zawierać 16 cyfr")
+    .when('payment', {
+      is: (val) => val === 'credit',
+      then: (schema) => schema.required("Wymagane"),
+      otherwise: (schema) => schema.notRequired(),
+    }),
+  expiryDate: Yup.string()
+    .matches(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/, "MM/YY format")
     .when('payment', {
       is: 'credit',
-      then: Yup.string()
-        .matches(/^\d{16}$/, "Musi zawierać 16 cyfr")
-        .required("Wymagane"),
-        }),
-    expiryDate: Yup.string()
-        .matches(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/, "MM/YY format")
-        .required("Wymagane"),
-    cvv: Yup.string()
-        .matches(/^\d{3,4}$/, "3-4 cyfry")
-        .required("Wymagane"),
-    blikCode: Yup.string()
+      then: (schema) => schema.required("Wymagane"),
+      otherwise: (schema) => schema.notRequired(),
+    }),
+  cvv: Yup.string()
+    .matches(/^\d{3,4}$/, "3-4 cyfry")
     .when('payment', {
-      is: 'blik',
-      then: Yup.string()
-        .matches(/^\d{6}$/, "6-cyfrowy kod BLIK")
-        .required("Wymagane")
-    })
+      is: 'credit',
+      then: (schema) => schema.required("Wymagane"),
+      otherwise: (schema) => schema.notRequired(),
+    }),
+  blikCode: Yup.string().when('payment', {
+    is: (val) => val === 'blik',
+    then: (schema) => schema
+      .matches(/^\d{6}$/, "6-cyfrowy kod BLIK")
+      .required("Wymagane"),
+    otherwise: (schema) => schema.notRequired(),
+  }),
 });
 
 const PaymentForm = () => {
@@ -94,7 +102,7 @@ const PaymentForm = () => {
             cardNumber: "",
             expiryDate: "",
             cvv: "",
-            blikCode: ""
+            blikCode: "",
         },
         validationSchema: paySchema,
         onSubmit: async (values, { resetForm, setSubmitting }) => {
