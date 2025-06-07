@@ -340,7 +340,7 @@ app.post('/api/band-submission', validateBandSubmission, async (req, res) => {
 app.get('/api/submissions', async (req, res) => {
   try {
     const submissions = await new Promise((resolve, reject) => {
-      db.all('SELECT * FROM bands ORDER BY submission_date DESC', [], (err, rows) => {
+      db2.all('SELECT * FROM bands ORDER BY submission_date DESC', [], (err, rows) => {
         if (err) return reject(err);
         resolve(rows);
       });

@@ -118,11 +118,12 @@ const PaymentForm = () => {
 
                 const text = await response.text();
                 const data = text ? JSON.parse(text) : {};
-
+                alert('Bilet kupiony pomyślnie!');
                 console.log("Odpowiedz serweru", data);
                 resetForm();
             } catch (error) {
                 console.error("Error", error);
+                alert('Wystąpił błąd podczas wysyłania zgłoszenia. Spróbuj ponownie.');
             } finally {
                 setSubmitting(false);
             }
