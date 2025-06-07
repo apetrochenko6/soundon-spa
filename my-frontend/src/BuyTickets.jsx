@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import './buyTicket.css';
-
+import React, { useState, useEffect } from 'react';
 
 const ticketDescriptions = {
     "1day": [
@@ -50,59 +50,61 @@ const TicketDetails = ({ ticketType }) => {
         </div>
     );
 };
-
 const paySchema = Yup.object().shape({
   name: Yup.string().required("Wymagane"),
   surname: Yup.string().required("Wymagane"),
   email: Yup.string().email("Nieprawidłowy adres e-mail").required("Wymagane"),
   phone: Yup.string().required("Wymagane"),
-  ticketType: Yup.string().required("Wybierz rodzaj biletu"),
+  ticketType: Yup.string()
+    .required("Wybierz rodzaj biletu")
+    .notOneOf(["--"], "Wybierz rodzaj biletu"),
   quantity: Yup.number().min(1, "Minimum 1 bilet").required("Wymagane"),
   payment: Yup.string().required("Wybierz metodę płatności"),
 
-  cardNumber: Yup.string()
-    .when('payment', {
-      is: 'credit',
-      then: Yup.string()
-        .matches(/^\d{16}$/, "Musi zawierać 16 cyfr")
-        .required("Wymagane"),
-      otherwise: Yup.string().notRequired()
-    }),
+  // Credit card fields
+  cardNumber: Yup.string().when('payment', {
+    is: (value) => value === 'credit',
+    then: Yup.string()
+      .matches(/^\d{16}$/, "Musi zawierać 16 cyfr")
+      .required("Wymagane"),
+    otherwise: Yup.string().notRequired()
+  }),
 
-  expiryDate: Yup.string()
-    .when('payment', {
-      is: 'credit',
-      then: Yup.string()
-        .matches(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/, "Format MM/YY")
-        .required("Wymagane"),
-      otherwise: Yup.string().notRequired()
-    }),
+  expiryDate: Yup.string().when('payment', {
+    is: (value) => value === 'credit',
+    then: Yup.string()
+      .matches(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/, "Format MM/YY")
+      .required("Wymagane"),
+    otherwise: Yup.string().notRequired()
+  }),
 
-  cvv: Yup.string()
-    .when('payment', {
-      is: 'credit',
-      then: Yup.string()
-        .matches(/^\d{3,4}$/, "3-4 cyfry")
-        .required("Wymagane"),
-      otherwise: Yup.string().notRequired()
-    }),
+  cvv: Yup.string().when('payment', {
+    is: (value) => value === 'credit',
+    then: Yup.string()
+      .matches(/^\d{3,4}$/, "3-4 cyfry")
+      .required("Wymagane"),
+    otherwise: Yup.string().notRequired()
+  }),
 
+  // BLIK code
   blikCode: Yup.string().when('payment', {
-  is: 'blik',
-  then: Yup.string()
-    .matches(/^\d{6}$/, "6-cyfrowy kod BLIK")
-    .required("Wymagane"),
-  otherwise: Yup.string().notRequired()
-})
+    is: (value) => value === 'blik',
+    then: Yup.string()
+      .matches(/^\d{6}$/, "6-cyfrowy kod BLIK")
+      .required("Wymagane"),
+    otherwise: Yup.string().notRequired()
+  })
 });
 const PaymentForm = () => {
+    const [submitError, setSubmitError] = useState(null);
+    const [submitSuccess, setSubmitSuccess] = useState(false);
     const formik = useFormik({
         initialValues: {
             name: "",
             surname: "",
             email: "",
             phone: "",
-            ticketType: "--",
+             ticketType: "--",
             quantity: 1,
             payment: "",
             cardNumber: "",
@@ -124,7 +126,7 @@ const PaymentForm = () => {
 
                 const text = await response.text();
                 const data = text ? JSON.parse(text) : {};
-
+                     setSubmitSuccess(true);
                 console.log("Odpowiedz serweru", data);
                 resetForm();
             } catch (error) {
@@ -134,10 +136,32 @@ const PaymentForm = () => {
             }
         },
     });
+    React.useEffect(() => {
+    if (formik.values.payment !== 'credit') {
+      formik.setFieldValue('cardNumber', '');
+      formik.setFieldValue('expiryDate', '');
+      formik.setFieldValue('cvv', '');
+    }
+    if (formik.values.payment !== 'blik') {
+      formik.setFieldValue('blikCode', '');
+    }
+  }, [formik.values.payment]);
 
     return (
         <div className="payment-container">
             <TicketDetails ticketType={formik.values.ticketType} />
+             {submitError && (
+        <div className="error-message" style={{ marginBottom: '20px' }}>
+          {submitError}
+        </div>
+      )}
+      
+      {/* Success message */}
+      {submitSuccess && (
+        <div className="success-message" style={{ marginBottom: '20px' }}>
+          Płatność zakończona sukcesem!
+        </div>
+      )}
             <div className="form-wrapper">
                 <form className="buy_ticket_form" onSubmit={formik.handleSubmit}>
 
