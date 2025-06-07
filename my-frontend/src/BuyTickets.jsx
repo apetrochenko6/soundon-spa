@@ -65,7 +65,7 @@ const paySchema = Yup.object().shape({
         .min(1, "Minimum 1")
         .required("Wymagane"),
     payment: Yup.string().required("Wybierz metodę płatności"),
-
+    
     // Conditional credit card fields
     cardNumber: Yup.string().when('payment', {
         is: 'credit',
@@ -88,7 +88,7 @@ const paySchema = Yup.object().shape({
             .required("Wymagane"),
         otherwise: Yup.string().notRequired()
     }),
-
+    
     // BLIK field
     blikCode: Yup.string().when('payment', {
         is: 'blik',
@@ -100,12 +100,6 @@ const paySchema = Yup.object().shape({
 });
 
 const PaymentForm = () => {
-    const [submitStatus, setSubmitStatus] = useState({
-        success: false,
-        error: null,
-        ticketId: null
-    });
-
     const formik = useFormik({
         initialValues: {
             name: "",
@@ -122,8 +116,6 @@ const PaymentForm = () => {
         },
         validationSchema: paySchema,
         onSubmit: async (values, { resetForm, setSubmitting }) => {
-            setSubmitStatus({ success: false, error: null, ticketId: null });
-
             try {
                 const response = await fetch(`https://soundon-spa.onrender.com/api/buy_ticket`, {
                     method: "POST",
@@ -131,49 +123,22 @@ const PaymentForm = () => {
                         "Content-Type": "application/json",
                     },
                     credentials: 'include',
-                    body: JSON.stringify({
-                        ...values,
-                        // Ensure quantity is a number
-                        quantity: Number(values.quantity),
-                        // Only include payment-specific fields
-                        cardNumber: values.payment === 'credit' ? values.cardNumber : undefined,
-                        expiryDate: values.payment === 'credit' ? values.expiryDate : undefined,
-                        cvv: values.payment === 'credit' ? values.cvv : undefined,
-                        blikCode: values.payment === 'blik' ? values.blikCode : undefined
-                    }),
+                    body: JSON.stringify(values),
                 });
 
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({}));
-                    throw new Error(
-                        errorData.message ||
-                        errorData.error ||
-                        `Server error: ${response.status} ${response.statusText}`
-                    );
-                }
+                const text = await response.text();
+                const data = text ? JSON.parse(text) : {};
 
-                const data = await response.json();
-                console.log("Server response:", data);
-
-                setSubmitStatus({
-                    success: true,
-                    error: null,
-                    ticketId: data.ticketId || data.id
-                });
-
+                console.log("Odpowiedz serweru", data);
                 resetForm();
             } catch (error) {
-                console.error("Submission error:", error);
-                setSubmitStatus({
-                    success: false,
-                    error: error.message || "Failed to process payment. Please try again.",
-                    ticketId: null
-                });
+                console.error("Error", error);
             } finally {
                 setSubmitting(false);
             }
         },
     });
+
     return (
         <div className="payment-container">
             <TicketDetails ticketType={formik.values.ticketType} />
@@ -421,18 +386,6 @@ const PaymentForm = () => {
                             {formik.isSubmitting ? "Przetwarzanie..." : "Kup bilet"}
                         </button>
                     </div>
-                    {submitStatus.error && (
-                        <div className="alert alert-danger">
-                            {submitStatus.error}
-                        </div>
-                    )}
-
-                    {submitStatus.success && (
-                        <div className="alert alert-success">
-                            Payment successful! Your ticket ID: {submitStatus.ticketId}
-                        </div>
-                    )}
-
                 </form>
             </div>
 
