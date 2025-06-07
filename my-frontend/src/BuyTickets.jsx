@@ -54,48 +54,26 @@ const TicketDetails = ({ ticketType }) => {
 const paySchema = Yup.object().shape({
     name: Yup.string().required("Wymagane"),
     surname: Yup.string().required("Wymagane"),
-    email: Yup.string().email("Nieprawidłowy email").required("Wymagane"),
-    phone: Yup.string()
-        .matches(/^[0-9]{9,15}$/, "Nieprawidłowy numer")
-        .required("Wymagane"),
-    ticketType: Yup.string()
-        .required("Wybierz bilet")
-        .notOneOf(["--"], "Wybierz bilet"),
-    quantity: Yup.number()
-        .min(1, "Minimum 1")
-        .required("Wymagane"),
+    email: Yup.string().email("Nieprawidłowy adres e-mail").required("Wymagane"),
+    phone: Yup.string().required("Wymagane"),
+    ticketType: Yup.string().required("Wybierz rodzaj biletu"),
+    quantity: Yup.number().min(1, "Minimum 1 ticket").required("Wymagane"),
     payment: Yup.string().required("Wybierz metodę płatności"),
-    
-    // Conditional credit card fields
-    cardNumber: Yup.string().when('payment', {
-        is: 'credit',
-        then: Yup.string()
-            .matches(/^\d{16}$/, "Musi zawierać 16 cyfr")
-            .required("Wymagane"),
-        otherwise: Yup.string().notRequired()
-    }),
-    expiryDate: Yup.string().when('payment', {
-        is: 'credit',
-        then: Yup.string()
-            .matches(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/, "Format MM/YY")
-            .required("Wymagane"),
-        otherwise: Yup.string().notRequired()
-    }),
-    cvv: Yup.string().when('payment', {
-        is: 'credit',
-        then: Yup.string()
-            .matches(/^\d{3,4}$/, "3-4 cyfry")
-            .required("Wymagane"),
-        otherwise: Yup.string().notRequired()
-    }),
-    
-    // BLIK field
-    blikCode: Yup.string().when('payment', {
-        is: 'blik',
-        then: Yup.string()
-            .matches(/^\d{6}$/, "6-cyfrowy kod")
-            .required("Wymagane"),
-        otherwise: Yup.string().notRequired()
+    cardNumber: Yup.string()
+        .matches(/^\d{16}$/, "Musi zawierać 16 cyfr")
+        .required("Wymagane"),
+    expiryDate: Yup.string()
+        .matches(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/, "MM/YY format")
+        .required("Wymagane"),
+    cvv: Yup.string()
+        .matches(/^\d{3,4}$/, "3-4 cyfry")
+        .required("Wymagane"),
+    blikCode: Yup.string()
+    .when('payment', {
+      is: 'blik',
+      then: Yup.string()
+        .matches(/^\d{6}$/, "6-cyfrowy kod BLIK")
+        .required("Wymagane")
     })
 });
 
