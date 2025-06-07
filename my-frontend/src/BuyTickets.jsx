@@ -87,14 +87,13 @@ const paySchema = Yup.object().shape({
       otherwise: Yup.string().notRequired()
     }),
 
-  blikCode: Yup.string()
-    .when('payment', {
-      is: 'blik',
-      then: Yup.string()
-        .matches(/^\d{6}$/, "6-cyfrowy kod BLIK")
-        .required("Wymagane"),
-      otherwise: Yup.string().notRequired()
-    })
+  blikCode: Yup.string().when('payment', {
+  is: 'blik',
+  then: Yup.string()
+    .matches(/^\d{6}$/, "6-cyfrowy kod BLIK")
+    .required("Wymagane"),
+  otherwise: Yup.string().notRequired()
+})
 });
 const PaymentForm = () => {
     const formik = useFormik({
@@ -103,7 +102,7 @@ const PaymentForm = () => {
             surname: "",
             email: "",
             phone: "",
-             ticketType: "--",
+            ticketType: "--",
             quantity: 1,
             payment: "",
             cardNumber: "",
