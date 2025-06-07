@@ -7,6 +7,7 @@ const nodemailer = require('nodemailer');
 const sqlite3 = require("sqlite3").verbose();
 const app = express();
 const PORT = process.env.PORT || 4000;
+const { body, validationResult } = require('express-validator');
 
 app.set('trust proxy', true);
 const corsOptions = {
@@ -78,6 +79,7 @@ app.get("/", (req, res) => {
 app.get("/api/buy_ticket", (req, res) => {
     res.status(405).json({ message: "Metoda GET nie jest obsługiwana. Użyj POST." });
 });
+
 app.post("/api/buy_ticket", async (req, res) => {
     const { name, surname, email, phone, ticketType, quantity, payment, cardNumber, expiryDate, cvv,blikCode } = req.body;
     if (!name || !surname || !email || !ticketType || !quantity || !payment) {
@@ -240,6 +242,116 @@ app.post("/api/buy_ticket", async (req, res) => {
         });
     }
 });
+const validateBandSubmission = [
+  body('band_name').trim().notEmpty().withMessage('Nazwa zespołu jest wymagana')
+    .isLength({ max: 100 }).withMessage('Nazwa zespołu może mieć maksymalnie 100 znaków'),
+  body('location').trim().notEmpty().withMessage('Miejscowość jest wymagana'),
+  body('genre').trim().notEmpty().withMessage('Gatunek muzyczny jest wymagany'),
+  body('demo').trim().notEmpty().withMessage('Link do demo jest wymagany')
+    .isURL().withMessage('Podaj poprawny URL'),
+  body('description').optional().trim(),
+  body('email').trim().notEmpty().withMessage('Email jest wymagany')
+    .isEmail().withMessage('Podaj poprawny adres email'),
+  body('phone').optional().trim()
+    .matches(/^[0-9]{9,15}$/).withMessage('Podaj poprawny numer telefonu')
+];
+
+const db2 = new sqlite3.Database('./bands.db', (err) => {
+  if (err) {
+    console.error('Database connection error:', err.message);
+  } else {
+    console.log('Connected to bands database');
+    db2.run(`CREATE TABLE IF NOT EXISTS bands (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      band_name TEXT NOT NULL,
+      location TEXT NOT NULL,
+      genre TEXT NOT NULL,
+      demo TEXT NOT NULL,
+      description TEXT,
+      email TEXT NOT NULL,
+      phone TEXT,
+      submission_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+      status TEXT DEFAULT 'pending'
+    )`);
+  }
+});
+app.post('/api/band-submission', validateBandSubmission, async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const { band_name, location, genre, demo, description, email, phone } = req.body;
+
+  try {
+    // Save to database
+    const result = await new Promise((resolve, reject) => {
+      db2.run(
+        `INSERT INTO bands 
+        (band_name, location, genre, demo, description, email, phone) 
+        VALUES (?, ?, ?, ?, ?, ?, ?)`,
+        [band_name, location, genre, demo, description, email, phone],
+        function(err) {
+          if (err) return reject(err);
+          resolve(this.lastID);
+        }
+      );
+    });
+
+    // Send confirmation email
+    const mailOptions = {
+      from: `"SoundON Festival" <${process.env.EMAIL_FROM}>`,
+      to: email,
+      subject: `Potwierdzenie zgłoszenia zespołu ${band_name}`,
+      html: `
+        <h2>Dziękujemy za zgłoszenie zespołu ${band_name}!</h2>
+        <p>Otrzymaliśmy Twoje zgłoszenie do udziału w SoundON Festival.</p>
+        <h3>Szczegóły zgłoszenia:</h3>
+        <ul>
+          <li><strong>Zespół:</strong> ${band_name}</li>
+          <li><strong>Pochodzenie:</strong> ${location}</li>
+          <li><strong>Gatunek:</strong> ${genre}</li>
+          <li><strong>Demo:</strong> <a href="${demo}">${demo}</a></li>
+          ${description ? `<li><strong>Opis:</strong> ${description}</li>` : ''}
+        </ul>
+        <p>Skontaktujemy się z Tobą w ciągu najbliższych dni.</p>
+        <p>Pozdrawiamy,<br>Zespół SoundON Festival</p>
+      `
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    res.status(201).json({
+      success: true,
+      message: 'Zgłoszenie zostało przyjęte',
+      submissionId: result
+    });
+
+  } catch (error) {
+    console.error('Submission error:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Wystąpił błąd podczas przetwarzania zgłoszenia'
+    });
+  }
+});
+
+
+app.get('/api/submissions', async (req, res) => {
+  try {
+    const submissions = await new Promise((resolve, reject) => {
+      db.all('SELECT * FROM bands ORDER BY submission_date DESC', [], (err, rows) => {
+        if (err) return reject(err);
+        resolve(rows);
+      });
+    });
+    res.json(submissions);
+  } catch (error) {
+    console.error('Error fetching submissions:', error);
+    res.status(500).json({ error: 'Failed to fetch submissions' });
+  }
+});
+
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({ 
