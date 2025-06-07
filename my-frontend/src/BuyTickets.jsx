@@ -52,47 +52,29 @@ const TicketDetails = ({ ticketType }) => {
 };
 
 const paySchema = Yup.object().shape({
-  name: Yup.string().required("Wymagane"),
-  surname: Yup.string().required("Wymagane"),
-  email: Yup.string().email("Nieprawidłowy adres e-mail").required("Wymagane"),
-  phone: Yup.string().required("Wymagane"),
-  ticketType: Yup.string().required("Wybierz rodzaj biletu"),
-  quantity: Yup.number().min(1, "Minimum 1 ticket").required("Wymagane"),
-  payment: Yup.string().required("Wybierz metodę płatności"),
-  
-  // Credit card fields - conditionally required
-  cardNumber: Yup.string().when('payment', {
-    is: (value) => value === 'credit', // Use function syntax
-    then: Yup.string()
-      .matches(/^\d{16}$/, "Musi zawierać 16 cyfr")
-      .required("Wymagane"),
-    otherwise: Yup.string().notRequired()
-  }),
-  
-  expiryDate: Yup.string().when('payment', {
-    is: (value) => value === 'credit',
-    then: Yup.string()
-      .matches(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/, "MM/YY format")
-      .required("Wymagane"),
-    otherwise: Yup.string().notRequired()
-  }),
-  
-  cvv: Yup.string().when('payment', {
-    is: (value) => value === 'credit',
-    then: Yup.string()
-      .matches(/^\d{3,4}$/, "3-4 cyfry")
-      .required("Wymagane"),
-    otherwise: Yup.string().notRequired()
-  }),
-  
-  // BLIK code - conditionally required
-  blikCode: Yup.string().when('payment', {
-    is: (value) => value === 'blikCode', // Use function syntax
-    then: Yup.string()
-      .matches(/^\d{6}$/, "6-cyfrowy kod BLIK")
-      .required("Wymagane"),
-    otherwise: Yup.string().notRequired()
-  })
+    name: Yup.string().required("Wymagane"),
+    surname: Yup.string().required("Wymagane"),
+    email: Yup.string().email("Nieprawidłowy adres e-mail").required("Wymagane"),
+    phone: Yup.string().required("Wymagane"),
+    ticketType: Yup.string().required("Wybierz rodzaj biletu"),
+    quantity: Yup.number().min(1, "Minimum 1 ticket").required("Wymagane"),
+    payment: Yup.string().required("Wybierz metodę płatności"),
+    cardNumber: Yup.string()
+        .matches(/^\d{16}$/, "Musi zawierać 16 cyfr")
+        .required("Wymagane"),
+    expiryDate: Yup.string()
+        .matches(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/, "MM/YY format")
+        .required("Wymagane"),
+    cvv: Yup.string()
+        .matches(/^\d{3,4}$/, "3-4 cyfry")
+        .required("Wymagane"),
+    blikCode: Yup.string()
+    .when('payment', {
+      is: 'blik',
+      then: Yup.string()
+        .matches(/^\d{6}$/, "6-cyfrowy kod BLIK")
+        .required("Wymagane")
+    })
 });
 
 const PaymentForm = () => {
