@@ -87,7 +87,7 @@ const paySchema = Yup.object().shape({
   
   // BLIK code - conditionally required
   blikCode: Yup.string().when('payment', {
-    is: (value) => value === 'blik', // Use function syntax
+    is: (value) => value === 'blikCode', // Use function syntax
     then: Yup.string()
       .matches(/^\d{6}$/, "6-cyfrowy kod BLIK")
       .required("Wymagane"),
