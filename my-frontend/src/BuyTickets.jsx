@@ -69,12 +69,8 @@ const paySchema = Yup.object().shape({
         .matches(/^\d{3,4}$/, "3-4 cyfry")
         .required("Wymagane"),
     blikCode: Yup.string()
-    .when('payment', {
-      is: 'blik',
-      then: Yup.string()
         .matches(/^\d{6}$/, "6-cyfrowy kod BLIK")
         .required("Wymagane")
-    })
 });
 
 const PaymentForm = () => {
