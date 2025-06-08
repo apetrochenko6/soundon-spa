@@ -300,30 +300,132 @@ app.post('/api/band-submission', validateBandSubmission, async (req, res) => {
 
     // Send confirmation email
     const mailOptions = {
-       from: `"SoundON Festival" <${process.env.EMAIL_FROM}>`,
+  from: `"SoundON Festival" <${process.env.EMAIL_FROM}>`,
   to: email,
   subject: `Potwierdzenie zgłoszenia zespołu ${band_name}`,
+  text: `Dzień dobry,\n\nDziękujemy za zgłoszenie zespołu ${band_name} do udziału w SoundON Festival.\n\nSzczegóły zgłoszenia:\nZespół: ${band_name}\nPochodzenie: ${location}\nGatunek: ${genre}\nDemo: ${demo}\n${description ? `Opis: ${description}` : ''}\n\nSkontaktujemy się z Tobą w ciągu najbliższych dni.\n\nPozdrawiamy,\nZespół SoundON Festival`,
   html: `<!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <style>
-        body { font-family: 'Work Sans', sans-serif; }
-        .header { background: #000; color: #FFD700; padding: 20px; }
-        .logo { font-family: 'Bebas Neue', cursive; font-size: 24px; }
-        .content { padding: 20px; }
+        body {
+            font-family: 'Work Sans', sans-serif;
+            background-color: #FFFFFF;
+            margin: 0;
+            padding: 0;
+            color: #000000;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            border: 4px solid #000;
+        }
+        .header {
+            background-color: #000;
+            padding: 20px;
+            text-align: center;
+        }
+        .logo {
+            color: #FFD700;
+            font-size: 36px;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-family: 'Bebas Neue', sans-serif;
+        }
+        .content {
+            padding: 30px;
+        }
+        .divider {
+            height: 20px;
+            background-color: #000;
+            margin: 20px 0;
+        }
+        .yellow-divider {
+            height: 20px;
+            background-color: #FFD700;
+            margin: 20px 0;
+        }
+        h1 {
+            font-size: 28px;
+            color: #000;
+            margin-bottom: 20px;
+            font-weight: 900;
+        }
+        .band-info {
+            margin-bottom: 30px;
+        }
+        .band-info p {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        .band-info strong {
+            color: #000;
+        }
+        .band-info ul {
+            padding-left: 20px;
+        }
+        .band-info li {
+            margin-bottom: 8px;
+        }
+        .footer {
+            background-color: #000;
+            color: #FFF;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .highlight {
+            background-color: #FFD700;
+            padding: 3px 5px;
+            font-weight: bold;
+        }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="header">
-        <div class="logo">SOUNDON FESTIVAL</div>
-    </div>
-    <div class="content">
-        <h2>Dziękujemy za zgłoszenie zespołu ${band_name}!</h2>
-        <!-- rest of your content -->
+    <div class="container">
+        <div class="header">
+            <div class="logo">#SOUNDON 2025</div>
+        </div>
+        
+        <div class="content">
+            <h1>DZIĘKUJEMY ZA ZGŁOSZENIE ZESPOŁU!</h1>
+            
+            <div class="band-info">
+                <p>Otrzymaliśmy Twoje zgłoszenie do udziału w SoundON Festival.</p>
+                
+                <div class="yellow-divider"></div>
+                
+                <h3>SZCZEGÓŁY ZGŁOSZENIA:</h3>
+                <ul>
+                    <li><strong>Zespół:</strong> ${band_name}</li>
+                    <li><strong>Pochodzenie:</strong> ${location}</li>
+                    <li><strong>Gatunek:</strong> ${genre}</li>
+                    <li><strong>Demo:</strong> <a href="${demo}">${demo}</a></li>
+                    ${description ? `<li><strong>Opis:</strong> ${description}</li>` : ''}
+                </ul>
+            </div>
+
+            <div class="divider"></div>
+            
+            <p>Skontaktujemy się z Tobą w ciągu najbliższych dni.</p>
+            
+            <p>W przypadku pytań prosimy o kontakt na adres: <a href="mailto:kontakt@soundon.pl">kontakt@soundon.pl</a></p>
+            
+            <div class="yellow-divider"></div>
+            
+            <p>Trzymamy kciuki!</p>
+            <p>Zespół SoundON Festival</p>
+        </div>
+        
+        <div class="footer">
+            © 2025 SoundON Festival. Wszelkie prawa zastrzeżone.
+        </div>
     </div>
 </body>
-</html>`}
+</html>`
+};
 
     await transporter.sendMail(mailOptions);
 
