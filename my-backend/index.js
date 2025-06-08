@@ -300,24 +300,30 @@ app.post('/api/band-submission', validateBandSubmission, async (req, res) => {
 
     // Send confirmation email
     const mailOptions = {
-      from: `"SoundON Festival" <${process.env.EMAIL_FROM}>`,
-      to: email,
-      subject: `Potwierdzenie zgłoszenia zespołu ${band_name}`,
-      html: `
+       from: `"SoundON Festival" <${process.env.EMAIL_FROM}>`,
+  to: email,
+  subject: `Potwierdzenie zgłoszenia zespołu ${band_name}`,
+  html: `<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: 'Work Sans', sans-serif; }
+        .header { background: #000; color: #FFD700; padding: 20px; }
+        .logo { font-family: 'Bebas Neue', cursive; font-size: 24px; }
+        .content { padding: 20px; }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="header">
+        <div class="logo">SOUNDON FESTIVAL</div>
+    </div>
+    <div class="content">
         <h2>Dziękujemy za zgłoszenie zespołu ${band_name}!</h2>
-        <p>Otrzymaliśmy Twoje zgłoszenie do udziału w SoundON Festival.</p>
-        <h3>Szczegóły zgłoszenia:</h3>
-        <ul>
-          <li><strong>Zespół:</strong> ${band_name}</li>
-          <li><strong>Pochodzenie:</strong> ${location}</li>
-          <li><strong>Gatunek:</strong> ${genre}</li>
-          <li><strong>Demo:</strong> <a href="${demo}">${demo}</a></li>
-          ${description ? `<li><strong>Opis:</strong> ${description}</li>` : ''}
-        </ul>
-        <p>Skontaktujemy się z Tobą w ciągu najbliższych dni.</p>
-        <p>Pozdrawiamy,<br>Zespół SoundON Festival</p>
-      `
-    };
+        <!-- rest of your content -->
+    </div>
+</body>
+</html>`}
 
     await transporter.sendMail(mailOptions);
 
