@@ -327,7 +327,7 @@ app.post('/api/band-submission', validateBandSubmission, async (req, res) => {
             text-align: center;
         }
         .logo {
-            color: #FFD700;
+            color: #FFCC00;
             font-size: 36px;
             font-weight: 900;
             text-transform: uppercase;
@@ -343,7 +343,7 @@ app.post('/api/band-submission', validateBandSubmission, async (req, res) => {
         }
         .yellow-divider {
             height: 20px;
-            background-color: #FFD700;
+            background-color: #FFCC00;
             margin: 20px 0;
         }
         h1 {
@@ -376,7 +376,7 @@ app.post('/api/band-submission', validateBandSubmission, async (req, res) => {
             font-size: 14px;
         }
         .highlight {
-            background-color: #FFD700;
+            background-color: #FFCC00;
             padding: 3px 5px;
             font-weight: bold;
         }
@@ -391,22 +391,6 @@ app.post('/api/band-submission', validateBandSubmission, async (req, res) => {
         
         <div class="content">
             <h1>DZIĘKUJEMY ZA ZGŁOSZENIE ZESPOŁU!</h1>
-            
-            <div class="band-info">
-                <p>Otrzymaliśmy Twoje zgłoszenie do udziału w SoundON Festival.</p>
-                
-                <div class="yellow-divider"></div>
-                
-                <h3>SZCZEGÓŁY ZGŁOSZENIA:</h3>
-                <ul>
-                    <li><strong>Zespół:</strong> ${band_name}</li>
-                    <li><strong>Pochodzenie:</strong> ${location}</li>
-                    <li><strong>Gatunek:</strong> ${genre}</li>
-                    <li><strong>Demo:</strong> <a href="${demo}">${demo}</a></li>
-                    ${description ? `<li><strong>Opis:</strong> ${description}</li>` : ''}
-                </ul>
-            </div>
-
             <div class="divider"></div>
             
             <p>Skontaktujemy się z Tobą w ciągu najbliższych dni.</p>
