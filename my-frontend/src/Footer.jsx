@@ -1,17 +1,18 @@
 import React from "react";
 import "./Footer.css"; 
+import { HashLink } from 'react-router-hash-link';
 import images from "./constants/data";
 const Footer = () => {
   return (
     <section className="footer-container">
       <div className="footer-left">
         <div className="footer-nav-buttons">
-          <a href="#" className="footer-nav-link">O NAS</a>
-          <a href="#" className="footer-nav-link">FAQ</a>
-          <a href="#" className="footer-nav-link">ARTYŚCI</a>
+          <HashLink smooth to="/#o_nas">O NAS</HashLink>
+          <HashLink smooth to="/#zespoly">ARTYŚCI</HashLink>
+          <HashLink smooth to="/#FAQ">FAQ</HashLink>
         </div>
 
-        <a href="#" className="footer-partner-link">PARTNERZY</a>
+        <HashLink smooth to="/#partnerzy">PARTNERZY</HashLink>
 
         <div className="footer-newsletter">
           <h3>ZAPISZ SIĘ DO NASZEGO NEWSLETTERA</h3>
