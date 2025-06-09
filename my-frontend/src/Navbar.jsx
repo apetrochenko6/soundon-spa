@@ -36,9 +36,9 @@ const Navbar = () => {
 
 
                 <div className="navbar-right">
-                    <a href="#"><img src={images.YoutubeYellow} style={{ width: '55px', height: '55px' }} alt="YouTube" /></a>
-                    <a href="#"><img src={images.InstagramYellow} style={{ width: '50px', height: '50px' }} alt="Instagram" /></a>
-                    <a href="#"><img src={images.SpotifyYellow} style={{ width: '43px', height: '43px' }} alt="Spotify" /></a>
+                    <a href="https://youtube.com/channel/UC_xasd5XG1OV2P6uZZ5FSM9Ttw"><img src={images.YoutubeYellow} style={{ width: '55px', height: '55px' }} alt="YouTube" /></a>
+                    <a href="https://instagram.com/isadadasdasdassa"><img src={images.InstagramYellow} style={{ width: '50px', height: '50px' }} alt="Instagram" /></a>
+                    <a href="https://open.spotify.com/artist/0du5cEassasdaVh5yTK9QJze8zA0C"><img src={images.SpotifyYellow} style={{ width: '43px', height: '43px' }} alt="Spotify" /></a>
                 </div>
 
                 <div className={`mobile-menu ${isMenuOpen ? 'active' : ''}`}>

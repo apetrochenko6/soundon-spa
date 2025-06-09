@@ -5,8 +5,8 @@ const JoinUs = () => {
     return(<div className="section-wrapper" style={{backgroundColor: "black"}}>
   <section className="banner-container" aria-label="Performance opportunity announcement">
     <div className="banner-top">
-      <h1>MASZ ZESPÓŁ? CHCESZ WYSTĄPIĆ? ZGŁOŚ SIĘ JUŻ DZIŚ I ZAWALCZ O</h1>
-      <div className="highlight-bar" aria-hidden="true">SCENĘ MARZEŃ!</div>
+      <h1>MASZ ZESPÓŁ? CHCESZ WYSTĄPIĆ? ZGŁOŚ SIĘ JUŻ DZIŚ</h1>
+      <div className="highlight-bar" aria-hidden="true">I ZAWALCZ OSCENĘ MARZEŃ!</div>
     </div>
     
     <div className='mini-wrap'>
