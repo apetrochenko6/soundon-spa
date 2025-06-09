@@ -171,7 +171,7 @@
             width: 57px;
             height: 57px; 
     }
-/* Mobile Responsive Styles */
+
 @media (max-width: 768px) {
     .footer-nav-link,
     .footer-partner-link {

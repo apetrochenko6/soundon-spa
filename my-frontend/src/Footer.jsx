@@ -7,12 +7,12 @@ const Footer = () => {
     <section className="footer-container">
       <div className="footer-left">
         <div className="footer-nav-buttons">
-          <HashLink smooth to="/#o_nas">O NAS</HashLink>
-          <HashLink smooth to="/#zespoly">ARTYŚCI</HashLink>
-          <HashLink smooth to="/#FAQ">FAQ</HashLink>
+          <HashLink className="footer-nav-link" smooth to="/#o_nas">O NAS</HashLink>
+          <HashLink className="footer-nav-link" smooth to="/#zespoly">ARTYŚCI</HashLink>
+          <HashLink className="footer-nav-link" smooth to="/#FAQ">FAQ</HashLink>
         </div>
 
-        <HashLink smooth to="/#partnerzy">PARTNERZY</HashLink>
+        <HashLink className="footer-nav-link" smooth to="/#partnerzy">PARTNERZY</HashLink>
 
         <div className="footer-newsletter">
           <h3>ZAPISZ SIĘ DO NASZEGO NEWSLETTERA</h3>
