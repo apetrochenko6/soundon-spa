@@ -27,9 +27,10 @@ const Footer = () => {
         </div>
 
         <div className="footer-sponsors">
-          <img src={images.InstagramBlack}  alt="instagram_logo" className="instagram_logo" />
-          <img src={images.SpotifyBlack}  alt="spotify_logo" className="spotify_logo"/>
-          <img src={images.YoutubeBlack}  alt="youtube_logo" className="youtube_logo" />
+          
+          <a href="https://youtube.com/channel/UC_xasd5XG1OV2P6uZZ5FSM9Ttw"><img src={images.YoutubeBlack} className="youtube_logo" alt="YouTube" /></a>
+          <a href="https://instagram.com/isadadasdasdassa"><img src={images.InstagramBlack} className="instagram_logo"  alt="Instagram" /></a>
+          <a href="https://open.spotify.com/artist/0du5cEassasdaVh5yTK9QJze8zA0C"><img src={images.SpotifyBlack} className="spotify_logo" alt="Spotify" /></a>
         </div>
       </div>
 

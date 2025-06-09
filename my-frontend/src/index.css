@@ -263,7 +263,6 @@
           scroll-snap-align: start;
         }
 
-        /* Контейнер для індикаторів */
         .indicators-container {
           max-width: 1550px;
           margin: 0 auto 5px auto;
@@ -271,7 +270,6 @@
           justify-content: center;
         }
 
-        /* Індикатори каруселі */
         .carousel-indicators {
           display: flex;
           justify-content: center;
@@ -515,7 +513,6 @@
 
           .festival-info {
             bottom: -40px;
-            /* Змінено з 40px на -40px */
             right: 0;
             width: 350px;
             height: 140px;
