@@ -109,9 +109,9 @@
 
         .text-box {
             width: 100%;
-            font-size: 32px;
+            font-size: 28px;
             padding: 20px;
-            margin-top: 30px;
+            margin-top: 20px;
         }
 
         .text-box::after {
