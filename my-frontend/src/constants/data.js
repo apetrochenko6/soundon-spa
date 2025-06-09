@@ -11,6 +11,7 @@ import InstagramBlack from "../assets/icons8-instagram_black.svg"
 import YoutubeBlack from "../assets/icons8-youtube_black.svg"
 import SpotifyBlack from "../assets/icons8-spotify_black.svg"
 import jumpCrowd from "../assets/jump-crowd.jpg"
+import heroImage3 from "../assets/pic_3.jpg"
 const images = {
   Hero: heroImage,
   Zespol1,
@@ -24,7 +25,8 @@ const images = {
   SpotifyBlack,
   YoutubeBlack,
   InstagramBlack,
-  jumpCrowd
+  jumpCrowd,
+  heroImage3
 };
 
 export default images;
