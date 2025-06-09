@@ -284,7 +284,6 @@ app.post('/api/band-submission', validateBandSubmission, async (req, res) => {
   const { band_name, location, genre, demo, description, email, phone } = req.body;
 
   try {
-    // Save to database
     const result = await new Promise((resolve, reject) => {
       db2.run(
         `INSERT INTO bands 

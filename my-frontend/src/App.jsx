@@ -7,6 +7,7 @@ import BuyTicket from './BuyTickets'
 import Footer from './Footer';
 import FAQ from './FAQ'
 import LabelSoundon from './Label'
+import JoinUs from './JoinUs';
 function App() {
 
   return <>
@@ -20,9 +21,8 @@ function App() {
             <section id="section"><Hero id="section"/>
             </section>
             <section id="zespoly"><Bands /></section>
-            
-             <section id="FAQ"><FAQ/></section>
-             
+            <section id="o_nas"><JoinUs/></section>
+            <section id="FAQ"><FAQ/></section>
             <Footer/>
            
           </>

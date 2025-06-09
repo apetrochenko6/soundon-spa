@@ -4,7 +4,6 @@ import { useFormik } from 'formik';
 import './BandForm.css';
 
 const BandForm = ({ isVisible, onClose }) => {
-  // Validation Schema
   const validationSchema = Yup.object().shape({
     band_name: Yup.string()
       .min(2, 'Nazwa zespołu musi mieć co najmniej 2 znaki')
@@ -26,8 +25,6 @@ const BandForm = ({ isVisible, onClose }) => {
     phone: Yup.string()
       .matches(/^[0-9]{9,15}$/, 'Podaj poprawny numer telefonu')
   });
-
-  // Formik setup
   const formik = useFormik({
     initialValues: {
       band_name: '',

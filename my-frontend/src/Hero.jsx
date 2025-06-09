@@ -8,7 +8,6 @@ const Hero = () => {
   const [showBandForm, setShowBandForm] = useState(false);
 
   const handleOverlayClick = (e) => {
-    // Close only if clicking directly on overlay (not form content)
     if (e.target === e.currentTarget) {
       setShowBandForm(false);
     }

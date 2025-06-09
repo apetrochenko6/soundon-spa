@@ -26,7 +26,7 @@ const Navbar = () => {
 
 
                 <div className="navbar-left">
-                    <a href="#section">O NAS</a>
+                    <a href="#o_nas">O NAS</a>
                     <a href="#">PARTNERZY</a>
                     <a href="#zespoly">ARTYŚCI</a>
                     <a href="#FAQ">FAQ</a>
