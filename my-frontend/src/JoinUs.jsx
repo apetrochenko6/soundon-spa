@@ -6,7 +6,7 @@ const JoinUs = () => {
   <section className="banner-container" aria-label="Performance opportunity announcement">
     <div className="banner-top">
       <h1>MASZ ZESPÓŁ? CHCESZ WYSTĄPIĆ? ZGŁOŚ SIĘ JUŻ DZIŚ</h1>
-      <div className="highlight-bar" aria-hidden="true">I ZAWALCZ OSCENĘ MARZEŃ!</div>
+      <div className="highlight-bar" aria-hidden="true">I ZAWALCZ O SCENĘ MARZEŃ!</div>
     </div>
     
     <div className='mini-wrap'>
