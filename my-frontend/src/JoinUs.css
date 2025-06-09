@@ -98,13 +98,13 @@
 
         .join-bar {
             font-size: 60px;
-            padding: 30px 30px;
+            padding: 10px 40px;
            
         }
 
         .content {
             flex-direction: column-reverse;
-            padding: 20px 20px;
+            padding: 30px 30px;
         }
 
         .text-box {
