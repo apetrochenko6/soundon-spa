@@ -1,6 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import images from "./constants/data";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { HashLink } from 'react-router-hash-link';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -26,10 +28,10 @@ const Navbar = () => {
 
 
                 <div className="navbar-left">
-                    <a href="#o_nas">O NAS</a>
-                    <a href="#">PARTNERZY</a>
-                    <a href="#zespoly">ARTYŚCI</a>
-                    <a href="#FAQ">FAQ</a>
+                    <HashLink smooth to="/#o_nas">O NAS</HashLink>
+                    <HashLink smooth to="/#partnerzy">PARTNERZY</HashLink>
+                    <HashLink smooth to="/#zespoly">ARTYŚCI</HashLink>
+                    <HashLink smooth to="/#FAQ">FAQ</HashLink>
                 </div>
 
 
@@ -40,11 +42,11 @@ const Navbar = () => {
                 </div>
 
                 <div className={`mobile-menu ${isMenuOpen ? 'active' : ''}`}>
-                    <a href="#section" onClick={toggleMenu}>O NAS</a>
-                    <a href="#" onClick={toggleMenu}>PARTNERZY</a>
-                    <a href="#zespoly" onClick={toggleMenu}>ARTYŚCI</a>
-                    <a href="#FAQ" onClick={toggleMenu}>FAQ</a>
-                    
+                    <HashLink smooth to="/#o_nas" onClick={toggleMenu}>O NAS</HashLink>
+                    <HashLink smooth to="/#partnerzy" onClick={toggleMenu}>PARTNERZY</HashLink>
+                    <HashLink smooth to="/#zespoly" onClick={toggleMenu}>ARTYŚCI</HashLink>
+                    <HashLink smooth to="/#FAQ" onClick={toggleMenu}>FAQ</HashLink>
+
                 </div>
             </div>
         </header>
