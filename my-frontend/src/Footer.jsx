@@ -12,7 +12,7 @@ const Footer = () => {
           <HashLink className="footer-nav-link" smooth to="/#FAQ">FAQ</HashLink>
         </div>
 
-        <HashLink className="footer-nav-link" smooth to="/#partnerzy">PARTNERZY</HashLink>
+        <HashLink className="footer-partner-link" smooth to="/#partnerzy">PARTNERZY</HashLink>
 
         <div className="footer-newsletter">
           <h3>ZAPISZ SIĘ DO NASZEGO NEWSLETTERA</h3>
