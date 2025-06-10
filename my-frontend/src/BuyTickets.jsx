@@ -107,7 +107,7 @@ const PaymentForm = () => {
         validationSchema: paySchema,
         onSubmit: async (values, { resetForm, setSubmitting }) => {
             try {
-                const response = await fetch(`https://soundon-spa.onrender.com/api/buy_ticket`, {
+                const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/buy_ticket`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
