@@ -38,7 +38,7 @@ const BandForm = ({ isVisible, onClose }) => {
     validationSchema,
     onSubmit: async (values, { setSubmitting, resetForm }) => {
       try {
-        const response = await fetch('https://soundon-spa.onrender.com/api/band-submission', {
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/band-submission`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

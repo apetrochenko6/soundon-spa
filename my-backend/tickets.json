@@ -24,5 +24,33 @@
     "expiryDate": "12/12",
     "cvv": "123",
     "createdAt": "2025-06-01T14:05:13.925Z"
+  },
+  {
+    "name": "ANHELINA",
+    "surname": "PETROCHENKO",
+    "email": "angpe452@gmail.com",
+    "phone": "0666065724",
+    "ticketType": "1day",
+    "quantity": 1,
+    "payment": "blik",
+    "cardNumber": "",
+    "expiryDate": "",
+    "cvv": "",
+    "blikCode": "322222",
+    "createdAt": "2025-06-10T16:33:31.750Z"
+  },
+  {
+    "name": "ANHELINA",
+    "surname": "PETROCHENKO",
+    "email": "angpe452@gmail.com",
+    "phone": "516855440",
+    "ticketType": "3day",
+    "quantity": 34,
+    "payment": "blik",
+    "cardNumber": "",
+    "expiryDate": "",
+    "cvv": "",
+    "blikCode": "342222",
+    "createdAt": "2025-06-10T16:36:44.383Z"
   }
 ]
