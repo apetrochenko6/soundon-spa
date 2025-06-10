@@ -52,5 +52,19 @@
     "cvv": "",
     "blikCode": "342222",
     "createdAt": "2025-06-10T16:36:44.383Z"
+  },
+  {
+    "name": "ANHELINA",
+    "surname": "PETROCHENKO",
+    "email": "angpe452@gmail.com",
+    "phone": "0666065724",
+    "ticketType": "1day",
+    "quantity": 1,
+    "payment": "blik",
+    "cardNumber": "",
+    "expiryDate": "",
+    "cvv": "",
+    "blikCode": "433333",
+    "createdAt": "2025-06-10T16:49:23.721Z"
   }
 ]

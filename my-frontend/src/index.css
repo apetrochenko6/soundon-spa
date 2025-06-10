@@ -669,7 +669,7 @@
 
         @media (max-width: 600px) {
           .carousel{
-            height: 320px;
+            height: 315px;
           }
           .buttons a.buy {
             align-self: flex-start;
