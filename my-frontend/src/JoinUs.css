@@ -67,7 +67,7 @@
 
 
     .image-box {
-        width: 45%;
+        width: 38%;
         margin-top: -40px;
     }
 
@@ -79,7 +79,7 @@
     }
 
 
-    @media (max-width: 1024px) {
+    @media (max-width: 1124px) {
         .mini-wrap {
             border-left: 30px solid #fff;
             border-right: 30px solid #fff;
