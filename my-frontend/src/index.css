@@ -611,13 +611,10 @@
           }
 
           .carousel-images img {
-            height: 400px;
+            object-position: left center; 
+            height: 340px;
+            
           }
-
-
-          
-
-
 
 
           .navbar-left {
