@@ -12,6 +12,15 @@ import YoutubeBlack from "../assets/icons8-youtube_black.svg"
 import SpotifyBlack from "../assets/icons8-spotify_black.svg"
 import jumpCrowd from "../assets/jump-crowd.jpg"
 import heroImage3 from "../assets/pic_3.png"
+import Ayeya from "../assets/Ayeya.png"
+import Deay  from "../assets/Deay.png"
+import Deantly from "../assets/deantly.png"
+import drag from "../assets/drag.png"
+import love from "../assets/love.png"
+import moda from "../assets/moda.png"
+import musicF from "../assets/music_F.png"
+import pr from "../assets/pr.png"
+import X from "../assets/X.png"
 const images = {
   Hero: heroImage,
   Zespol1,
@@ -26,7 +35,16 @@ const images = {
   YoutubeBlack,
   InstagramBlack,
   jumpCrowd,
-  heroImage3
+  heroImage3,
+  Ayeya,
+  Deay,
+  Deantly,
+  drag,
+  love,
+  moda,
+  musicF,
+  pr,
+  X
 };
 
 export default images;

@@ -9,6 +9,7 @@ import Footer from './Footer';
 import FAQ from './FAQ';
 import LabelSoundon from './Label';
 import JoinUs from './JoinUs';
+import SponsorSection from './SponsorSection';
 function MainPage() {
   return (
     <>
@@ -18,6 +19,7 @@ function MainPage() {
       <section id="zespoly"><Bands /></section>
       <section id="o_nas"><JoinUs /></section>
       <section id="FAQ"><FAQ /></section>
+      <section className='sponsors-section' id="partnerzy"><SponsorSection/></section>
       <Footer />
     </>
   );
