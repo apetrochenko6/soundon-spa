@@ -2,7 +2,8 @@
     background-color: #fff;
     
     font-family: 'Work Sans', sans-serif;
-    border-bottom: 20px solid #000;
+    border-bottom: 20px solid black;
+    
     
 }
 
@@ -69,6 +70,9 @@
 }
 
 @media (max-width: 768px) {
+    .sponsors-section {
+        border-bottom: 15px solid black;
+    }
     .sponsors-title {
         font-size: 60px;
         padding: 6px 12px;
@@ -82,25 +86,5 @@
     
     .sponsors-logos img {
         max-height: 100px;
-    }
-}
-@media (max-width: 480px) {
-    .sponsors-title {
-        font-size: 60px;
-        margin-bottom: 20px;
-    }
-    
-    .sponsors-logos {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px 10px;
-    }
-    
-    .sponsors-logos img {
-        max-height: 80px;
-    }
-    
-    .sponsors-section {
-        padding: 30px 15px;
-        border-bottom-width: 30px;
     }
 }
